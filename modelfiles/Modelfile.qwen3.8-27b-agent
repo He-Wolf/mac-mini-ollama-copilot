@@ -4,6 +4,10 @@ FROM qwen3.8:27b-mlx
 # 128k context. Copilot (OpenAI-compatible API) cannot set this per request.
 PARAMETER num_ctx 131072
 
+# Safety cap: VS Code extension sends no output limit, so a runaway thinking session
+# would otherwise run until the 128k context is full (~40 min). 16k tokens ~ 1500 lines.
+PARAMETER num_predict 16384
+
 # Qwen recommended sampling for precise coding tasks
 PARAMETER temperature 0.6
 PARAMETER top_p 0.95

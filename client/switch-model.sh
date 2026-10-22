@@ -3,7 +3,7 @@
 # used by the VS Code Ollama extension. Run it on the machine where VS Code runs
 # (Git Bash on Windows, or a terminal on macOS/Linux). Needs ssh, curl and jq.
 #
-# Usage: ./switch-model.sh <27b|35b> [off|on|low|medium|xhigh]   (thinking; default: on)
+# Usage: ./switch-model.sh <27b|35b> [off|on|low|medium|xhigh]   (thinking; default: 35b off, 27b on)
 #        ./switch-model.sh status
 #
 # Thinking cannot be set on the server (Ollama Modelfiles have no "think" option).
@@ -38,7 +38,8 @@ case "$1" in
     *)      echo "Usage: $0 <27b|35b> [off|on|low|medium|xhigh] | status"; exit 1 ;;
 esac
 
-THINKING="${2:-on}"
+# default: thinking off for the 35B (it tends to overthink), on for the 27B
+[ "$MODEL" = "qwen3.6-35b-a3b-agent" ] && THINKING="${2:-off}" || THINKING="${2:-on}"
 case "$MODEL:$THINKING" in
     *:off)                              THINK_VAL="false" ;;
     qwen3.8-27b-agent:on)               THINK_VAL='"medium"' ;;

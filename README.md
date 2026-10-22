@@ -61,6 +61,25 @@ the prompt.
   `rope.dimension_sections`). For llama.cpp use `ggml-org/Qwen3.6-35B-A3B-GGUF`.
 - Context: 128k with q8_0 KV loads in **23 GB (35B)** and **19.3 GB (27B)**.
 
+### Thinking loops (35B-A3B)
+
+The 35B tends to overthink. 6 tricky prompts with thinking on and a 6,000-token cap:
+
+| presence_penalty | did not finish |
+|---|---|
+| 0 (Qwen "precise coding") | 3 / 6 |
+| 1.5 (Qwen "thinking, general") | 2 / 6 |
+
+Given 16,000 tokens, two of them still had no answer after ~11k thinking tokens, with 0%
+verbatim repetition: not a copy-paste loop but endless re-checking. **With thinking off,
+the 35B answered the same prompts correctly in 76-1,000 tokens.** Hence:
+
+- 35B: **thinking off by default** (`"qwen3.6-35b-a3b-agent:latest": false`); turn it on only
+  for a hard question you are willing to wait for.
+- Both Modelfiles set **`num_predict 16384`**. The VS Code Ollama extension sends no output
+  limit, so without a cap a runaway generation runs until the 128k context is full (~40 min).
+- Test it yourself: `python3 bench/loops.py http://localhost:8080 qwen3.6-35b-a3b-agent 0`
+
 ## Setup
 
 ### 1. Mac: prerequisites

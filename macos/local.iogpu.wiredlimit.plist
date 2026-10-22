@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Let the GPU use 40 of 48 GB unified memory (macOS default is ~36 GB). sysctl resets on
+  reboot, so this LaunchDaemon sets it at boot. For other RAM sizes, leave ~8 GB for macOS.
+  Install: sudo cp local.iogpu.wiredlimit.plist /Library/LaunchDaemons/
+           sudo chown root:wheel /Library/LaunchDaemons/local.iogpu.wiredlimit.plist
+           sudo launchctl bootstrap system /Library/LaunchDaemons/local.iogpu.wiredlimit.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>local.iogpu.wiredlimit</string>
+  <key>ProgramArguments</key>
+  <array><string>/usr/sbin/sysctl</string><string>iogpu.wired_limit_mb=40960</string></array>
+  <key>RunAtLoad</key><true/>
+</dict>
+</plist>

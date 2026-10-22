@@ -1,0 +1,7 @@
+{
+    "ollama.endpoint": "http://192.168.1.50:8080",
+    "ollama.thinkingLevels": {
+        "qwen3.6-35b-a3b-agent:latest": true,
+        "qwen3.8-27b-agent:latest": "medium"
+    }
+}

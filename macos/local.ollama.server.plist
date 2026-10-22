@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Ollama server as a login service.
+  Install: cp local.ollama.server.plist ~/Library/LaunchAgents/
+           launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.ollama.server.plist
+  Starts at login (enable auto login for a headless Mac) and restarts if it dies.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>local.ollama.server</string>
+  <key>ProgramArguments</key>
+  <array><string>/opt/homebrew/bin/ollama</string><string>serve</string></array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <!-- reachable from the LAN on port 8080; use 127.0.0.1:11434 for local-only -->
+    <key>OLLAMA_HOST</key><string>0.0.0.0:8080</string>
+    <!-- keep the model loaded forever: no reload delay, prompt cache survives -->
+    <key>OLLAMA_KEEP_ALIVE</key><string>-1</string>
+    <key>OLLAMA_CONTEXT_LENGTH</key><string>131072</string>
+    <key>OLLAMA_FLASH_ATTENTION</key><string>1</string>
+    <!-- q8_0 KV cache: ~2 GB less memory at 128k, measured at the same speed as f16 -->
+    <key>OLLAMA_KV_CACHE_TYPE</key><string>q8_0</string>
+    <key>OLLAMA_NUM_PARALLEL</key><string>1</string>
+    <!-- 35B + 27B together do not fit in 48 GB; switching models unloads the other -->
+    <key>OLLAMA_MAX_LOADED_MODELS</key><string>1</string>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/tmp/ollama.log</string>
+  <key>StandardErrorPath</key><string>/tmp/ollama.log</string>
+</dict>
+</plist>

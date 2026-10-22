@@ -1,0 +1,29 @@
+################ qwen3.8-27b-agent
+date: 2026-10-22 14:39:16 CEST | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        qwen3_5            
+    parameters          27.8B              
+    context length      262144             
+    quantization        nvfp4              
+    completion     
+    vision         
+    tools          
+    thinking       
+        levels     false, low, medium, xhigh    
+        default    medium                       
+    top_p               0.95      
+    presence_penalty    0         
+    temperature         0.6       
+    top_k               20        
+tool call: [{"id": "call_2jpjc063", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+qwen3.8-27b-agent            cold   8k: prefill   7584 tok      99 tok/s ( 76.4s) | gen  24.0 tok/s | wall  79.8s
+qwen3.8-27b-agent            warm   8k: prefill   7687 tok   21047 tok/s (  0.4s) | gen  29.7 tok/s | wall   1.6s
+qwen3.8-27b-agent            cold  32k: prefill  30123 tok      91 tok/s (331.5s) | gen  18.2 tok/s | wall 334.2s
+qwen3.8-27b-agent            warm  32k: prefill  30193 tok   66646 tok/s (  0.5s) | gen  22.1 tok/s | wall   1.2s
+qwen3.8-27b-agent              ctx   0k: prefill     74 tok/s | decode 500 tok @  28.6 tok/s
+qwen3.8-27b-agent              ctx  30k: prefill     96 tok/s | decode 500 tok @  25.9 tok/s
+---- loops, thinking ON
+(loop test skipped on request: dense model)
+---- loops, thinking OFF
+(loop test skipped on request: dense model)
+qwen3.8-27b-agent:latest    3d97f2cd6e87    27 GB    100% GPU     131072     mlx       Forever    
+time=2026-10-22T14:50:03.980+02:00 level=INFO source=speculate_stats.go:62 msg="speculative decode stats" iterations=24 drafted=72 accepted=55 acceptance=0.76 avg_draft=3.00 max_draft=3 avg_accepted=2.29 depth_over_time=

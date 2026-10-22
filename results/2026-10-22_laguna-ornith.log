@@ -1,0 +1,93 @@
+################ laguna-xs-2.1:nvfp4
+    architecture        laguna             
+    parameters          33.9B              
+    context length      262144             
+    quantization        nvfp4              
+    completion     
+    tools          
+    thinking       
+        levels     false, true    
+        default    true           
+tool call: [{"id": "call_bhyzueyw", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+laguna-xs-2.1:nvfp4          cold   8k: prefill   7598 tok     568 tok/s ( 13.4s) | gen  53.4 tok/s | wall  14.0s
+laguna-xs-2.1:nvfp4          warm   8k: prefill   7646 tok   90379 tok/s (  0.1s) | gen  69.5 tok/s | wall   0.3s
+laguna-xs-2.1:nvfp4          cold  32k: prefill  30129 tok     435 tok/s ( 69.3s) | gen  45.4 tok/s | wall  70.1s
+laguna-xs-2.1:nvfp4          warm  32k: prefill  30183 tok  160572 tok/s (  0.2s) | gen  49.1 tok/s | wall   1.0s
+laguna-xs-2.1:nvfp4            ctx   0k: prefill    445 tok/s | decode 500 tok @ 107.0 tok/s
+laguna-xs-2.1:nvfp4            ctx  30k: prefill    500 tok/s | decode 500 tok @  69.0 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~  900 thinking tok,  1403 total tok, answered
+      ->  time it takes for 100 machines to make 100 widgets is 5 minutes.  ### Final Answer The ball costs \boxed{0.05} dollars and 100 machines take \boxed{5} minutes.
+pp=0.0 think=True #2: ~ 5549 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 3366 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #4: ~ 3222 thinking tok,  5251 total tok, answered
+      -> the entire string is an IPv4 address.  This regex correctly handles all valid IPv4 addresses and rejects invalid ones with leading zeros or out-of-range values.
+pp=0.0 think=True #5: ~ 2185 thinking tok,  2757 total tok, answered
+      -> on` (e.g., `typescript.tsdk`).  By addressing these points systematically, you should resolve the discrepancy between the successful build and VS Code's errors.
+pp=0.0 think=True #6: ~ 4210 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~3238 thinking tok, cap hits 3/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,   235 total tok, answered
+      -> machines would each produce 1 widget in the same time (5 minutes), resulting in 100 widgets.    **Answers:**   Ball: $\boxed{0.05}$   Time: $\boxed{5}$ minutes.
+pp=0.0 think=False #2: ~    0 thinking tok,   243 total tok, answered
+      -> cond(xs):     a = b = float('-inf')     for x in xs:         if x > a:             a, b = x, a         elif x > b and x != a:             b = x     return b ```
+pp=0.0 think=False #3: ~    0 thinking tok,   212 total tok, answered
+      -> , \(2^{61} - 1\) factors into smaller primes, though its exact factors are not trivial to compute manually.   Thus, \(2^{61} - 1\) is **not prime**.  \boxed{No}
+pp=0.0 think=False #4: ~    0 thinking tok,   567 total tok, answered
+      -> d by the last octet without a trailing `.`.  This regex strictly enforces valid IPv4 addresses with no leading zeros and values between 0 and 255 in each octet.
+pp=0.0 think=False #5: ~    0 thinking tok,   222 total tok, answered
+      -> Code's environment.  7. **Workspace folder not properly included** - VS Code might not be recognizing all workspace folders, causing module resolution failures.
+pp=0.0 think=False #6: ~    0 thinking tok,   436 total tok, answered
+      -> nits}) + 100 \, (\text{tens}) + 100 \, (\text{hundreds}) = 300 \]  Therefore, the digit 1 appears \(\boxed{300}\) times when writing all integers from 1 to 999.
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 0/6
+laguna-xs-2.1:nvfp4    540825c4fccb    26 GB    100% GPU     131072     mlx       Forever    
+################ ornith-1.5:35b
+    architecture        qwen35moe             
+    parameters          35.5B                 
+    context length      262144                
+    quantization        Q4_K_M                
+    tools         
+    thinking      
+    completion    
+    architecture        clip       
+    parameters          446.57M    
+tool call: [{"id": "Jjef9nMjgO5XLeoMhRwDUo0kcjsWSZny", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+ornith-1.5:35b               cold   8k: prefill   7580 tok     677 tok/s ( 11.2s) | gen  54.3 tok/s | wall  12.2s
+ornith-1.5:35b               warm   8k: prefill   7655 tok   44559 tok/s (  0.2s) | gen  55.6 tok/s | wall   0.7s
+ornith-1.5:35b               cold  32k: prefill  30113 tok     494 tok/s ( 61.0s) | gen  44.2 tok/s | wall  61.9s
+ornith-1.5:35b               warm  32k: prefill  30171 tok  117803 tok/s (  0.3s) | gen  44.9 tok/s | wall   1.0s
+ornith-1.5:35b                 ctx   0k: prefill    225 tok/s | decode 500 tok @  59.1 tok/s
+ornith-1.5:35b                 ctx  30k: prefill    597 tok/s | decode 500 tok @  49.5 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~  157 thinking tok,   555 total tok, answered
+      ->  5 minutes. So:  $$100 \text{ machines} \times (1 \text{ widget} / 5 \text{ min}) = 100 \text{ widgets in } \textbf{5 minutes}$$  **The answer is 5 minutes.** 🕒
+pp=0.0 think=True #2: ~ 3615 thinking tok,  5747 total tok, answered
+      -> . If you'd rather signal that explicitly, replace the final `return b` with:  ```python     return b if b != float('-inf') else None   # or raise ValueError ```
+pp=0.0 think=True #3: ~  666 thinking tok,  1363 total tok, answered
+      ->  was done computationally by Édouard Lucas in 1876, and it famously held the record as the largest known prime for 75 years until 2¹²⁷ − 1 was verified in 1951.
+pp=0.0 think=True #4: ~ 2354 thinking tok,  4924 total tok, answered
+      ->  a word and non-word char. If you need strict substring rejection, keep the `^...$` full-string anchors or add explicit lookarounds: `(?<![0-9.])...(?![0-9.])`.
+pp=0.0 think=True #5: ~ 2533 thinking tok,  3163 total tok, answered
+      -> s, confirm via `cmd/ctrl-click` on `@app/core` that it resolves to a real, indexed `.ts` file — that single step immediately separates causes 1–2 from the rest.
+pp=0.0 think=True #6: ~  436 thinking tok,  1052 total tok, answered
+      -> o 999 gives $1000$ numbers with $3$ digits each = $3000$ digits total. By symmetry, each digit (0–9) appears equally often: $$\frac{3000}{10} = 300 \checkmark$$
+pp=0.0 think=True SUMMARY: avg ~1626 thinking tok, cap hits 0/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,   276 total tok, answered
+      -> sly) - That produces 100 widgets in the same time  **Answer: 5 minutes** ✓  The machines work in parallel, so adding more machines doesn't add time—just output.
+pp=0.0 think=False #2: ~    0 thinking tok,   725 total tok, answered
+      -> learer and correctly handles all cases: negative numbers, duplicates, and short lists. The sentinel-based version is more memory-efficient but more error-prone.
+pp=0.0 think=False #3: ~    0 thinking tok,   290 total tok, answered
+      -> le checking a 19-digit number by hand isn't practical, it's a well-established historical result, and modern algorithms make it quick to verify computationally.
+pp=0.0 think=False #4: ~    0 thinking tok,   951 total tok, answered
+      ->  leading zeros (a single optional `1-9` followed by a required `0-9`, so `01` fails). Both versions are equivalent—use whichever reads better for your codebase.
+pp=0.0 think=False #5: ~    0 thinking tok,   890 total tok, answered
+      -> ty of these cases in monorepos.  Would you like me to show a working example `tsconfig.json` configuration for a pnpm/yarn monorepo with `@app/*` path mappings?
+pp=0.0 think=False #6: ~    0 thinking tok,   390 total tok, answered
+      -> t 1 appears in: **1** → only 1 time - Using my method: $10 \div 10 = 1$ ✓  ## Answer  The digit 1 appears **300 times** when writing all integers from 1 to 999.
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 0/6
+ornith-1.5:35b    9f3b89b25219    22 GB    100% GPU     131072     llamacpp    Forever    
+TESTS_FINISHED

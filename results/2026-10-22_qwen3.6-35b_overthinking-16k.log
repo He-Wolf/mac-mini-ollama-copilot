@@ -1,0 +1,15 @@
+################ qwen3.6-35b-a3b-agent: unfinished prompts rerun with 16000-token cap (thinking ON) and with thinking OFF
+date: 2026-10-22 | ollama 0.40.8 | Apple M4 Pro 48 GB | KV q8_0, num_ctx 131072
+#2 think ON  16k: ~11362 thinking tok, 16000 tok, length, repeated chunks overall 0%, in last 3k chars 0%
+    answer: -
+#2 think OFF    :    76 tok, stop
+    answer: ```python def second(xs):     # Initialize a and b to None to handle negative numbers and ensure proper comparison     a = b = None     for x in xs:         if 
+#3 think ON  16k: ~11166 thinking tok, 16000 tok, length, repeated chunks overall 0%, in last 3k chars 0%
+    answer: -
+#3 think OFF    :   528 tok, stop
+    answer: **Yes, $2^{61} - 1$ is prime.**  ### Explanation  1.  **Classification**: $2^{61} - 1$ is the 11th known **Mersenne prime**. Mersenne primes are prime numbers o
+#6 think ON  16k: ~ 3873 thinking tok,  6868 tok, stop  , repeated chunks overall 0%, in last 3k chars 0%
+    answer: The digit 1 appears **300** times when writing all integers from 1 to 999.  Here is the step-by-step breakdown of how to calculate this:  We can count the occur
+#6 think OFF    :  1007 tok, stop
+    answer: To determine how many times the digit **1** appears when writing all integers from 1 to 999, we can break the problem down by analyzing the occurrences of the d
+

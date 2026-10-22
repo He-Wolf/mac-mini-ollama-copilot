@@ -1,0 +1,53 @@
+################ qwen3.6-35b-a3b-agent
+date: 2026-10-22 14:50:04 CEST | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        qwen3_5_moe        
+    parameters          36.0B              
+    context length      262144             
+    quantization        nvfp4              
+    completion     
+    vision         
+    tools          
+    thinking       
+        levels     false, true    
+        default    true           
+    temperature         0.6       
+    top_k               20        
+    top_p               0.95      
+    presence_penalty    0         
+tool call: [{"id": "call_ftq9hx0l", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+qwen3.6-35b-a3b-agent        cold   8k: prefill   7595 tok     713 tok/s ( 10.7s) | gen  63.1 tok/s | wall  11.3s
+qwen3.6-35b-a3b-agent        warm   8k: prefill   7655 tok   31761 tok/s (  0.2s) | gen  64.4 tok/s | wall   0.5s
+qwen3.6-35b-a3b-agent        cold  32k: prefill  30117 tok     551 tok/s ( 54.7s) | gen  47.3 tok/s | wall  55.9s
+qwen3.6-35b-a3b-agent        warm  32k: prefill  30191 tok   90615 tok/s (  0.3s) | gen  56.9 tok/s | wall   0.8s
+qwen3.6-35b-a3b-agent          ctx   0k: prefill    227 tok/s | decode 500 tok @  79.6 tok/s
+qwen3.6-35b-a3b-agent          ctx  30k: prefill    633 tok/s | decode 500 tok @  67.8 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~  735 thinking tok,  1211 total tok, answered
+      -> ey work in parallel.)*  Both are classic "cognitive reflection" questions designed to catch quick, intuitive answers. Let me know if you'd like more like these!
+pp=0.0 think=True #2: ~ 4515 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 3477 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #4: ~ 3323 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #5: ~ 4585 thinking tok,  5783 total tok, answered
+      ->  -b` succeeds, your build pipeline is correct. The issue is almost always a **language service vs compiler divergence** in configuration or workspace structure.
+pp=0.0 think=True #6: ~ 3646 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~3380 thinking tok, cap hits 4/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,   519 total tok, answered
+      -> ill produce 1 widget. 4.  Therefore, the time required is the same as the time it takes for one machine to make one widget.  **Answer:** It takes **5 minutes**.
+pp=0.0 think=False #2: ~    0 thinking tok,  1836 total tok, answered
+      ->  x         elif x > second and x < first:             second = x                  if second == float('-inf'):         return None              return second ```
+pp=0.0 think=False #3: ~    0 thinking tok,   439 total tok, answered
+      -> t $S_{59} \equiv 0 \pmod{2^{61}-1}$, proving its primality.  Thus, $2^{61} - 1$ is the **6th Mersenne prime** and was the largest known prime from 1876 to 1897.
+pp=0.0 think=False #4: ~    0 thinking tok,    91 total tok, answered
+      -> ```regex ^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])$ ```
+pp=0.0 think=False #5: ~    0 thinking tok,  1281 total tok, answered
+      -> sider checking for conflicting `tsconfig.json` files in parent directories or ensuring that the `@app/core` package is not excluded from the consumer’s project.
+pp=0.0 think=False #6: ~    0 thinking tok,   827 total tok, answered
+      -> 0. The number 000 contains no 1s, so the count for 1–999 remains 300.  ### Conclusion The digit 1 appears **300** times when writing all integers from 1 to 999.
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 0/6
+qwen3.6-35b-a3b-agent:latest    530213d0db2d    29 GB    100% GPU     131072     mlx       Forever    
+time=2026-10-22T14:59:32.613+02:00 level=INFO source=speculate_stats.go:62 msg="speculative decode stats" iterations=423 drafted=424 accepted=406 acceptance=0.96 avg_draft=1.00 max_draft=2 avg_accepted=0.96 depth_over_ti

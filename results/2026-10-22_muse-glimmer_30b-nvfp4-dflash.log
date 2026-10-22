@@ -1,0 +1,25 @@
+################ muse-glimmer:30b-nvfp4-dflash
+date: 2026-10-22 14:19:57 CEST | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        muse_glimmer       
+    parameters          32.3B              
+    context length      131072             
+    quantization        nvfp4              
+    completion     
+    vision         
+    tools          
+    thinking       
+        levels     false, low, medium, high, max    
+        default    high                             
+    top_p                0.95    
+    draft_num_predict    15      
+    temperature          1       
+    top_k                64      
+tool call: [{"id": "call_gpez5kwn", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+muse-glimmer:30b-nvfp4-dflas cold   8k: prefill   6795 tok     100 tok/s ( 68.0s) | gen  18.8 tok/s | wall  74.9s
+muse-glimmer:30b-nvfp4-dflas warm   8k: prefill   6818 tok   19219 tok/s (  0.4s) | gen  20.7 tok/s | wall   2.2s
+muse-glimmer:30b-nvfp4-dflas cold  32k: prefill  26933 tok      96 tok/s (280.4s) | gen  17.2 tok/s | wall 287.9s
+muse-glimmer:30b-nvfp4-dflas warm  32k: prefill  26959 tok   70774 tok/s (  0.4s) | gen  18.1 tok/s | wall   3.2s
+muse-glimmer:30b-nvfp4-dflash  ctx   0k: prefill    147 tok/s | decode 500 tok @  23.4 tok/s
+muse-glimmer:30b-nvfp4-dflash  ctx  30k: prefill     98 tok/s | decode 500 tok @  21.7 tok/s
+muse-glimmer:30b-nvfp4-dflash    015fa21845be    21 GB    100% GPU     131072     mlx       Forever    
+time=2026-10-22T14:29:39.602+02:00 level=INFO source=speculate_stats.go:62 msg="speculative decode stats" iterations=257 drafted=257 accepted=243 acceptance=0.95 avg_draft=1.00 max_draft=2 avg_accepted=0.95 depth_over_ti

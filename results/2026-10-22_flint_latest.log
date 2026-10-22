@@ -1,0 +1,49 @@
+################ flint:latest
+date: 2026-10-22 14:29:57 CEST | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        flint              
+    parameters          39.8B              
+    context length      262144             
+    quantization        int4               
+    completion    
+    tools         
+    thinking      
+    temperature    1       
+    top_k          20      
+    top_p          0.95    
+tool call: [{"id": "call_zub3z3ip", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+flint:latest                 cold   8k: prefill   6780 tok     724 tok/s (  9.4s) | gen  92.6 tok/s | wall  10.8s
+flint:latest                 warm   8k: prefill   6792 tok   93572 tok/s (  0.1s) | gen  91.7 tok/s | wall   1.2s
+flint:latest                 cold  32k: prefill  26899 tok     564 tok/s ( 47.7s) | gen  71.3 tok/s | wall  49.6s
+flint:latest                 warm  32k: prefill  26909 tok  231315 tok/s (  0.1s) | gen  71.3 tok/s | wall   1.9s
+flint:latest                   ctx   0k: prefill    254 tok/s | decode 500 tok @ 103.1 tok/s
+flint:latest                   ctx  30k: prefill    651 tok/s | decode 500 tok @  80.8 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~ 1174 thinking tok,  1375 total tok, answered
+      -> e 100 widgets.   Since 5 machines make 5 widgets in 5 minutes, each machine makes 1 widget in 5 minutes, so 100 machines make 100 widgets in the same 5 minutes.
+pp=0.0 think=True #2: ~ 5020 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~  337 thinking tok,   517 total tok, answered
+      ->  numbers. Applying it to \(2^{61} - 1\) confirms that it has no divisors and is prime.  The number equals **2,305,843,009,213,693,951**, and it is indeed prime.
+pp=0.0 think=True #4: ~ 1492 thinking tok,  2443 total tok, answered
+      -> jects addresses with leading zeros (e.g., `01.2.3.4`), numbers outside 0–255 (e.g., `256.1.1.1`), and incorrect formats (e.g., missing octets or extra numbers).
+pp=0.0 think=True #5: ~ 6723 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #6: ~ 2559 thinking tok,  3206 total tok, answered
+      -> 19** → **100** times - **Units place:** numbers ending in **1**, like **1, 11, 21, ..., 991** → **100** times  Total: **100 + 100 + 100 = 300**  **Answer: 300**
+pp=0.0 think=True SUMMARY: avg ~2884 thinking tok, cap hits 2/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,  1649 total tok, answered
+      -> The bat costs **$1.05**.  For the machines: **5 minutes**.   5 machines make 5 widgets in 5 minutes, so 100 machines make 100 widgets in the same **5 minutes**.
+pp=0.0 think=False #2: ~    0 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=False #3: ~    0 thinking tok,  1189 total tok, answered
+      ->  **Mersenne prime**. Its primality is verified using the **Lucas–Lehmer primality test** for Mersenne numbers, which confirms that \(2^{61}-1\) has no divisors.
+pp=0.0 think=False #4: ~    0 thinking tok,  3955 total tok, answered
+      -> .0.0` - ✅ `255.255.255.255` - ✅ `10.0.0.1` - ❌ `256.1.1.1` (octet > 255) - ❌ `01.2.3.4` (leading zero) - ❌ `1.2.3` (missing octet) - ❌ `1.2.3.4.5` (extra octet)
+pp=0.0 think=False #5: ~    0 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> l` mapping**      - The `@app/*` alias may be defined in the root or base config, but not in the specific package’s `tsconfig.json`, or it may be misconfigured.
+pp=0.0 think=False #6: ~    0 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 3/6
+flint:latest    4a4aceea5490    26 GB    100% GPU     131072     mlx       Forever    
+time=2026-10-22T14:29:39.602+02:00 level=INFO source=speculate_stats.go:62 msg="speculative decode stats" iterations=257 drafted=257 accepted=243 acceptance=0.95 avg_draft=1.00 max_draft=2 avg_accepted=0.95 depth_over_ti

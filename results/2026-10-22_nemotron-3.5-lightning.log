@@ -1,0 +1,51 @@
+13:23:39 pulling nemotron-3.5-lightning:30b-a3b-nvfp4 (attempt 1)
+13:40:44 DONE nemotron-3.5-lightning:30b-a3b-nvfp4
+################ nemotron-3.5-lightning:30b-a3b-nvfp4
+    architecture        nemotron_h           
+    parameters          32.9B                
+    context length      262144               
+    quantization        nvfp4                
+    completion     
+    tools          
+    thinking       
+        levels     false, true, medium    
+        default    true                   
+    temperature    1       
+    top_p          0.95    
+tool call: [{"id": "call_8q83yq4l", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+nemotron-3.5-lightning:30b-a cold   8k: prefill   6972 tok     674 tok/s ( 10.3s) | gen  61.7 tok/s | wall  11.0s
+nemotron-3.5-lightning:30b-a warm   8k: prefill   7034 tok   62914 tok/s (  0.1s) | gen  55.8 tok/s | wall   0.4s
+nemotron-3.5-lightning:30b-a cold  32k: prefill  27606 tok     584 tok/s ( 47.3s) | gen  45.0 tok/s | wall  48.0s
+nemotron-3.5-lightning:30b-a warm  32k: prefill  27656 tok  209813 tok/s (  0.1s) | gen  53.3 tok/s | wall   0.4s
+nemotron-3.5-lightning:30b-a3b ctx   0k: prefill    209 tok/s | decode 500 tok @  86.9 tok/s
+nemotron-3.5-lightning:30b-a3b ctx  30k: prefill    616 tok/s | decode 500 tok @  70.9 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~  347 thinking tok,   640 total tok, answered
+      -> rate will produce 100 widgets in the same **5 minutes** (all working in parallel).  **Answers:** Ball = **$0.05**, 100 machines for 100 widgets = **5 minutes**.
+pp=0.0 think=True #2: ~ 1506 thinking tok,  2281 total tok, answered
+      -> dates when a larger *distinct* candidate appears. - Returns `None` when there is no second distinct value, which is the standard safe way to signal "not found."
+pp=0.0 think=True #3: ~ 1160 thinking tok,  1767 total tok, answered
+      -> ndently confirmed multiple times since its original proof (notably in the 19th century and re-verified computationally). Its value is 2,305,843,009,213,693,951.
+pp=0.0 think=True #4: ~ 1676 thinking tok,  3299 total tok, answered
+      -> | | `1.2.3` | ❌ (only 3 octets) | | `1.2.3.4.5` | ❌ (too many) |  Use with `re.fullmatch()` in Python or equivalent anchoring in your language/engine of choice.
+pp=0.0 think=True #5: ~ 1519 thinking tok,  2893 total tok, answered
+      -> estart the TS server and reload the window.  Most of the time it's #1 or #2––the IDE just isn't loading the same config file or context that the CLI build uses.
+pp=0.0 think=True #6: ~ 1848 thinking tok,  2985 total tok, answered
+      -> pattern check: for numbers 1 to \(10^n - 1\), the digit 1 appears \( n \times 10^{n-1} \) times. Here \(n = 3\), giving \(3 \times 100 = 300\).  **Answer: 300**
+pp=0.0 think=True SUMMARY: avg ~1342 thinking tok, cap hits 0/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,   148 total tok, answered
+      -> ne 5 minutes to make one widget. Since all 100 machines are working simultaneously, they will each make one widget in 5 minutes, resulting in 100 widgets total.
+pp=0.0 think=False #2: ~    0 thinking tok,   699 total tok, answered
+      -> xt smallest distinct value (`3`). *   **`b is None or x > b`**: This safely updates `b` during the first iteration and correctly handles subsequent comparisons.
+pp=0.0 think=False #3: ~    0 thinking tok,   167 total tok, answered
+      -> s factors are **230,584,300,921,369,395,218,169** and **636,180,981,886,278,014,757**. Because it has factors other than 1 and itself, it is not a prime number.
+pp=0.0 think=False #4: ~    0 thinking tok,   614 total tok, answered
+      -> ut of range) ❌ *   `192.168.01.1` (Leading zero in octet) ❌ *   `1.2.3.4.5` (Too many octets) ❌ *   `1.2.3` (Too few octets) ❌ *   `1.2.3.4 ` (Trailing space) ❌
+pp=0.0 think=False #5: ~    0 thinking tok,  1104 total tok, answered
+      -> and consistent across the root and the affected package. 3.  Run `Ctrl+Shift+P` -> "TypeScript: Restart TS Server" to force VS Code to reload the configuration.
+pp=0.0 think=False #6: ~    0 thinking tok,   515 total tok, answered
+      -> e count. The range from 1 to 999 is equivalent to the range from 001 to 999, and the count remains 300.  Thus, the digit 1 appears 300 times.  \[ \boxed{300} \]
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 0/6
+nemotron-3.5-lightning:30b-a3b-nvfp4    d1e17d7dabac    21 GB    100% GPU     131072     mlx       Forever    
+NEMO_FINISHED

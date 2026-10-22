@@ -1,0 +1,16 @@
+################ qwen3.6-35b-a3b-agent: loops.py thinking ON, presence_penalty 0 vs 1.5 (6000-token cap)
+date: 2026-10-22 | ollama 0.40.8 | Apple M4 Pro 48 GB | KV q8_0, num_ctx 131072
+pp=0.0 #1: ~  658 thinking tok,  1049 total tok, answered
+pp=0.0 #2: ~ 4794 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+pp=0.0 #3: ~ 4479 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+pp=0.0 #4: ~ 2461 thinking tok,  4802 total tok, answered
+pp=0.0 #5: ~ 3131 thinking tok,  4260 total tok, answered
+pp=0.0 #6: ~ 3611 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+pp=0.0 SUMMARY: avg ~3189 thinking tok, cap hits 3/6
+pp=1.5 #1: ~  658 thinking tok,  1087 total tok, answered
+pp=1.5 #2: ~ 4647 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+pp=1.5 #3: ~ 4217 thinking tok,  5902 total tok, answered
+pp=1.5 #4: ~ 2286 thinking tok,  4408 total tok, answered
+pp=1.5 #5: ~ 2187 thinking tok,  3376 total tok, answered
+pp=1.5 #6: ~ 3879 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+pp=1.5 SUMMARY: avg ~2979 thinking tok, cap hits 2/6

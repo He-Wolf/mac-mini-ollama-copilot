@@ -1,8 +1,9 @@
-# Local coding agent on a Mac mini M4 Pro (48 GB): Ollama + Qwen + GitHub Copilot
+# Local coding agent on a Mac mini M4 Pro (48 GB): Ollama + GitHub Copilot
 
-A headless Mac mini serving Qwen 3.6 35B-A3B and Qwen 3.8 27B over the LAN with Ollama,
-used as a coding agent from VS Code with GitHub Copilot (bring your own model).
-Includes the settings, the benchmark scripts and measured results.
+A headless Mac mini serving local coding models over the LAN with Ollama, used as a coding
+agent from VS Code with GitHub Copilot (bring your own model). Includes the settings, the
+benchmark scripts, raw results, and a [comparison of 7 local coding models](#model-comparison-7-local-coding-models):
+Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
 
 Tested October 2026: Mac mini M4 Pro, 48 GB, macOS 26.5.1, Ollama 0.40.8 (MLX runner),
 llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
@@ -11,15 +12,19 @@ llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 
 ### Which model
 
-| Model (Ollama tag) | Weights | Prefill 8k / 30k | Decode | Use it for |
-|---|---|---|---|---|
-| `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **708 / 550 tok/s** | **60 tok/s** | everyday agent work |
-| `qwen3.8:27b-mlx` (dense) | 18 GB | ~99 / 96 tok/s | 28 tok/s | hard problems, when you can wait |
+| Model (Ollama tag) | Weights | Prefill 8k / 30k | Decode | Thinking | Use it for |
+|---|---|---|---|---|---|
+| **`ornith-1.5:35b`** (MoE, 3B active) | 23 GB | 677 / 494 tok/s | 59 tok/s | **on** | **everyday agent work** (recommended) |
+| `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **713 / 551 tok/s** | **63 tok/s** | **off** (overthinks) | fast agent work, baseline |
+| `qwen3.8:27b-mlx` (dense) | 18 GB | 99 / 91 tok/s | 28 tok/s | on (`medium`) | hard problems, when you can wait |
+
+Why these three and not the others: see the [model comparison](#model-comparison-7-local-coding-models)
+(Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer were tested and dropped).
 
 A coding agent sends ~20-30k tokens on the first turn (system prompt, tool definitions,
-files). Uncached, that takes **~45 s on the 35B and ~5 min on the 27B**.
+files). Uncached, that takes **~45-60 s on the MoE models and ~5 min on the 27B**.
 
-### Engine comparison (35B-A3B, 4-bit, q8_0 KV cache, thinking off)
+### Engine comparison (Qwen 3.6 35B-A3B, 4-bit, q8_0 KV cache, thinking off)
 
 | Engine | Prefill 8k | Prefill 30k | Decode 8k / 30k |
 |---|---|---|---|
@@ -61,13 +66,13 @@ the prompt.
   `rope.dimension_sections`). For llama.cpp use `ggml-org/Qwen3.6-35B-A3B-GGUF`.
 - Context: 128k with q8_0 KV loads in **23 GB (35B)** and **19.3 GB (27B)**.
 
-### Thinking loops (35B-A3B)
+### Thinking loops (Qwen 3.6 35B-A3B)
 
-The 35B tends to overthink. 6 tricky prompts with thinking on and a 6,000-token cap:
+The Qwen 35B tends to overthink. 6 tricky prompts with thinking on and a 6,000-token cap:
 
 | presence_penalty | did not finish |
 |---|---|
-| 0 (Qwen "precise coding") | 3 / 6 |
+| 0 (Qwen "precise coding") | 3 / 6, rerun: 4 / 6 |
 | 1.5 (Qwen "thinking, general") | 2 / 6 |
 
 Given 16,000 tokens, two of them still had no answer after ~11k thinking tokens, with 0%
@@ -76,7 +81,8 @@ the 35B answered the same prompts correctly in 76-1,000 tokens.** Hence:
 
 - 35B: **thinking off by default** (`"qwen3.6-35b-a3b-agent:latest": false`); turn it on only
   for a hard question you are willing to wait for.
-- Both Modelfiles set **`num_predict 16384`**. The VS Code Ollama extension sends no output
+- Ornith 1.5 does not have this problem (0 / 6 unfinished, see the comparison), so it runs with thinking on.
+- All Modelfiles set **`num_predict 16384`**. The VS Code Ollama extension sends no output
   limit, so without a cap a runaway generation runs until the 128k context is full (~40 min).
 - Test it yourself: `python3 bench/loops.py http://localhost:8080 qwen3.6-35b-a3b-agent 0`
 
@@ -189,7 +195,15 @@ ollama pull qwen3.6:35b-mlx      # 23 GB; rerun if it times out, it resumes
 ollama pull qwen3.8:27b-mlx      # 18 GB
 ollama create qwen3.6-35b-a3b-agent -f modelfiles/Modelfile.qwen3.6-35b-a3b-agent
 ollama create qwen3.8-27b-agent     -f modelfiles/Modelfile.qwen3.8-27b-agent
+
+# the recommended everyday model (see the model comparison above)
+ollama pull ornith-1.5:35b       # 22 GB
+ollama create ornith-1.5-agent      -f modelfiles/Modelfile.ornith-1.5-agent
 ```
+
+Ornith reports no thinking levels to clients, so the VS Code extension ignores
+`ollama.thinkingLevels` for it: it always runs with thinking on (the server default), which is
+fine because it did not overthink in the tests.
 
 The Modelfiles set a 128k context (Copilot cannot set `num_ctx` per request) and Qwen's
 recommended sampling for coding (temperature 0.6, top_p 0.95, top_k 20).
@@ -204,7 +218,7 @@ Install the **Ollama** extension (publisher Ollama, id `ollama.ollama`), then ad
   `fetch failed: connect ECONNREFUSED`.
 - Do **not** also add an `ollama-models` entry to `chatLanguageModels.json`: it is listed in
   addition to the built-in group, so every model appears twice.
-- Hide the base tags (`qwen3.6:35b-mlx`, `qwen3.8:27b-mlx`) with the eye icon in
+- Hide the base tags (`qwen3.6:35b-mlx`, `qwen3.8:27b-mlx`, `ornith-1.5:35b`) with the eye icon in
   *Language Models*.
 - The gear icon of the built-in group says *"Language model provider group Ollama for vendor
   ollama-models not found"*. That is harmless: the group is configured via `ollama.*` settings.
@@ -219,7 +233,8 @@ prefill the whole conversation cold.
 
 ```bash
 export MAC_USER=your-mac-user MAC_HOST=192.168.1.50
-./client/switch-model.sh 35b          # preload the 35B, thinking on
+./client/switch-model.sh ornith       # preload Ornith (thinking always on)
+./client/switch-model.sh 35b          # preload the Qwen 35B, thinking off
 ./client/switch-model.sh 27b xhigh    # 27B with maximum thinking
 ./client/switch-model.sh 35b off
 ./client/switch-model.sh status

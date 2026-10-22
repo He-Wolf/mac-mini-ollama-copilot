@@ -1,0 +1,17 @@
+# Ornith 1.5 35B-A3B (MoE, 3B active, Qwen3.6 RL fine-tune) for agentic coding via GitHub Copilot BYOK
+FROM ornith-1.5:35b
+
+# 128k context. Copilot (OpenAI-compatible API) cannot set this per request.
+PARAMETER num_ctx 131072
+
+# Safety cap: VS Code extension sends no output limit, so a runaway thinking session
+# would otherwise run until the 128k context is full (~40 min). 16k tokens ~ 1500 lines.
+PARAMETER num_predict 16384
+
+# Ornith recommended sampling for general tasks (model card)
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+PARAMETER top_k 20
+PARAMETER min_p 0
+PARAMETER presence_penalty 0
+PARAMETER repeat_penalty 1

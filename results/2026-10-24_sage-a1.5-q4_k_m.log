@@ -1,0 +1,48 @@
+################ hf.co/InternScience/Sage-A1.5-Q4_K_M-GGUF
+date: 2026-10-24 22:45:21 CEST | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        qwen35moe             
+    parameters          35.5B                 
+    context length      262144                
+    quantization        Q4_K_M                
+    tools         
+    thinking      
+    completion    
+    vision        
+    architecture        clip       
+    parameters          446.57M    
+tool call: [{"id": "WbfWV4ECgcjIJiB3NQo7MR2Z0EfN5mhx", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+hf.co/InternScience/Sage-A1. cold   8k: prefill   7583 tok     677 tok/s ( 11.2s) | gen  53.2 tok/s | wall  12.2s
+hf.co/InternScience/Sage-A1. warm   8k: prefill   7652 tok   41724 tok/s (  0.2s) | gen  52.2 tok/s | wall   0.9s
+hf.co/InternScience/Sage-A1. cold  32k: prefill  30120 tok     513 tok/s ( 58.7s) | gen  41.5 tok/s | wall  60.1s
+hf.co/InternScience/Sage-A1. warm  32k: prefill  30194 tok  117587 tok/s (  0.3s) | gen  43.1 tok/s | wall   0.9s
+hf.co/InternScience/Sage-A1.5- ctx   0k: prefill    230 tok/s | decode 500 tok @  57.1 tok/s
+hf.co/InternScience/Sage-A1.5- ctx  30k: prefill    601 tok/s | decode 500 tok @  47.8 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~  663 thinking tok,  1092 total tok, answered
+      -> individual machine makes 1 widget in 5 minutes. Therefore, if you have 100 machines working simultaneously, they will produce 100 widgets in the same 5 minutes.
+pp=0.0 think=True #2: ~ 4777 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 3949 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #4: ~ 3351 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #5: ~ 5500 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #6: ~ 3384 thinking tok,  5972 total tok, answered
+      -> 00 / 10 = 300$.  Since the number 000 contains no 1s, and adding leading zeros does not add any 1s, the count for 1 to 999 is exactly the same.  **Answer: 300**
+pp=0.0 think=True SUMMARY: avg ~3604 thinking tok, cap hits 4/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,   469 total tok, answered
+      -> 100 \text{ widgets}$$      Therefore, the time required remains **5 minutes**.  ***  ### Final Answer  1.  The ball costs **$0.05**. 2.  It takes **5 minutes**.
+pp=0.0 think=False #2: ~    0 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> s 2 ✓  `second([1, 1])`: - x=1: a=1 - x=1: 1>1? No. 1!=1? No. - returns None ✓  This is clean. I'll use this.  One more: `second([2, 2, 1, 1])`: - x=2: a=2 - x=
+pp=0.0 think=False #3: ~    0 thinking tok,   440 total tok, answered
+      ->  $S_{k} = S_{k-1}^2 - 2$  Then $M_p$ is prime if and only if $S_{p-2} \equiv 0 \pmod{M_p}$.  For $p = 61$, this test confirms that $2^{61} - 1$ is indeed prime.
+pp=0.0 think=False #4: ~    0 thinking tok,   166 total tok, answered
+      -> 0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])$ ```
+pp=0.0 think=False #5: ~    0 thinking tok,  1333 total tok, answered
+      -> json` that VS Code’s language service isn’t loading (e.g., defined only in the root `tsconfig.json` while the package file is not included in the root project).
+pp=0.0 think=False #6: ~    0 thinking tok,  1010 total tok, answered
+      -> : $199 - 100 + 1 = 100$ times.  **Total:** $$100 + 100 + 100 = 300$$  ### Conclusion  The digit 1 appears **300** times when writing all integers from 1 to 999.
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 1/6
+hf.co/InternScience/Sage-A1.5-Q4_K_M-GGUF:latest    3e76d021a219    22 GB    100% GPU     131072     llamacpp    Forever    

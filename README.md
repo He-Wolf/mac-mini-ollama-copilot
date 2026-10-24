@@ -2,8 +2,8 @@
 
 A headless Mac mini serving local coding models over the LAN with Ollama, used as a coding
 agent from VS Code with GitHub Copilot (bring your own model). Includes the settings, the
-benchmark scripts, raw results, and a [comparison of 7 local coding models](#model-comparison-7-local-coding-models):
-Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
+benchmark scripts, raw results, and a [comparison of 8 local coding models](#model-comparison-8-local-coding-models):
+Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
 
 Tested October 2026: Mac mini M4 Pro, 48 GB, macOS 26.5.1, Ollama 0.40.8 (MLX runner),
 llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
@@ -18,8 +18,8 @@ llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 | `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **713 / 551 tok/s** | **63 tok/s** | **off** (overthinks) | fast agent work, baseline |
 | `qwen3.8:27b-mlx` (dense) | 18 GB | 99 / 91 tok/s | 28 tok/s | on (`medium`) | hard problems, when you can wait |
 
-Why these three and not the others: see the [model comparison](#model-comparison-7-local-coding-models)
-(Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer were tested and dropped).
+Why these three and not the others: see the [model comparison](#model-comparison-8-local-coding-models)
+(Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer were tested and dropped).
 
 A coding agent sends ~20-30k tokens on the first turn (system prompt, tool definitions,
 files). Uncached, that takes **~45-60 s on the MoE models and ~5 min on the 27B**.
@@ -86,7 +86,7 @@ the 35B answered the same prompts correctly in 76-1,000 tokens.** Hence:
   limit, so without a cap a runaway generation runs until the 128k context is full (~40 min).
 - Test it yourself: `python3 bench/loops.py http://localhost:8080 qwen3.6-35b-a3b-agent 0`
 
-## Model comparison: 7 local coding models
+## Model comparison: 8 local coding models
 
 All measured on the same Mac mini (M4 Pro, 48 GB, Ollama 0.40.8, q8_0 KV cache, 128k context)
 with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](results/).
@@ -98,6 +98,7 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 | Flint 40B-A2B (`flint:latest`) | MoE, 2.5B active | 22 GB | **724** / 564 | **103** / **81** | 2 | 3 of 6 unfinished ⁴ |
 | Qwen 3.6 35B-A3B (`qwen3.6:35b-mlx`) | MoE, 3B active | 23 GB | 713 / 551 | 80 / 68 | **4** | 0 |
 | Ornith 1.5 35B-A3B (`ornith-1.5:35b`) ¹ | MoE, 3B active | 23 GB | 677 / 494 | 59 / 50 | **0** | 0 |
+| Sage-A1.5 35B-A3B (`hf.co/InternScience/Sage-A1.5-Q4_K_M-GGUF`) ¹ | MoE, 3B active | 21 GB | 677 / 513 | 57 / 48 | **4** | 1 of 6 unfinished ⁵ |
 | Nemotron 3.5 Lightning (`nemotron-3.5-lightning:30b-a3b-nvfp4`) | hybrid Mamba-MoE, 3B active | 19 GB | 674 / **584** | 87 / 71 | **0** | 1 (2^61−1 "not prime") |
 | Laguna XS 2.1 (`laguna-xs-2.1:nvfp4`) | MoE, 3B active | 20 GB | 568 / 435 | 107 / 69 | 3 | 1 (2^61−1 "not prime") |
 | Qwen 3.8 27B (`qwen3.8:27b-mlx`) | dense | 18 GB | 99 / 91 | 29 / 26 | not tested ² | not tested ² |
@@ -108,6 +109,7 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 ² The loop test was only run for MoE models; the dense models are too slow for agent work here anyway.
 ³ DFlash: +50% decode at 95% draft acceptance, prefill unchanged.
 ⁴ Flint keeps reasoning with thinking off: answers ran to the 6,000-token cap or came back empty.
+⁵ Sage reasoned in the visible answer with thinking off ("This is clean. I'll use this. One more: …") until the cap.
 
 - **Prefill** = cold prompt processing (unique prefix, no cache hit). Tokenizers differ: the same
   8k-token text is 6,780 tokens for Flint and 7,595 for Qwen, so Flint's lead is ~10% larger in practice.
@@ -121,21 +123,23 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 
 | Model | Terminal-Bench 2.1 | SWE-bench Pro | SWE-bench Verified |
 |---|---|---|---|
-| Qwen 3.8 27B | **73.0** | **61.7** ⁵ | not reported |
+| Qwen 3.8 27B | **73.0** | **61.7** ⁶ | not reported |
 | Ornith 1.5 35B-A3B | 67.8 | 59.6 | **79.0** |
+| Sage-A1.5 35B-A3B | not reported | 61.2 | not reported |
 | Flint 40B-A2B | 54.9 | (89.7 on "v2", not comparable) | 74.2 |
-| Qwen 3.6 35B-A3B | 52.5 ⁶ | 49.5 | 73.4 |
+| Qwen 3.6 35B-A3B | 52.5 ⁷ | 49.5 | 73.4 |
 | Muse Glimmer 30B | 51.7 | 51.2 | 76.0 |
 | Laguna XS 2.1 | 37.5 (Terminal-Bench **2.0**) | 47.6 | 70.9 |
 | Nemotron 3.5 Lightning (NVFP4) | 23.5 | – | 52.8 |
 
-⁵ on Qwen's corrected task set · ⁶ as listed on the Ornith card; Qwen's own card reports Terminal-Bench 2.0: 51.5
+⁶ on Qwen's corrected task set · ⁷ as listed on the Ornith card; Qwen's own card reports Terminal-Bench 2.0: 51.5
 
 Terminal-Bench is the closest to Copilot agent mode / Hermes-style work (multi-step tool use in a
 terminal); SWE-bench Pro is harder and less contaminated than SWE-bench Verified. Each vendor uses its
 own harness and settings, so only large gaps are meaningful. Sources: the model cards of
 [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B), [Qwen3.6-35B-A3B](https://huggingface.co/Qwen/Qwen3.6-35B-A3B),
-[Ornith-1.5-35B-A3B](https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B), [Flint](https://huggingface.co/RecursiveSI/flint),
+[Ornith-1.5-35B-A3B](https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B), [Sage-A1.5](https://huggingface.co/InternScience/Sage-A1.5),
+[Flint](https://huggingface.co/RecursiveSI/flint),
 [Laguna-XS-2.1](https://huggingface.co/poolside/Laguna-XS-2.1) and
 [Nemotron-3.5-Lightning NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4);
 Muse Glimmer's numbers as listed on the Qwen3.8 and Ornith cards.
@@ -147,6 +151,8 @@ Muse Glimmer's numbers as listed on the Qwen3.8 and Ornith cards.
   very long sessions: try it in real work before switching.
 - **Qwen 3.6 35B-A3B: fast, but use it with thinking off.** With thinking on it left 3-4 of 6 prompts
   unfinished in two runs.
+- **Sage-A1.5: same speed as Ornith and a similar SWE-bench Pro score, but overthinks like its Qwen
+  base** (4 of 6 unfinished with thinking on) and keeps reasoning in the answer with thinking off.
 - **Nemotron 3.5 Lightning: fastest at long context** and thinks efficiently, but scores far lower on
   agentic coding benchmarks. Keep thinking on.
 - **Flint: fastest overall**, but overthinks and cannot really switch thinking off. Needs the output cap.

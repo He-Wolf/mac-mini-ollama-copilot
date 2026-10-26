@@ -1,0 +1,33 @@
+################ qwen3.6-35b-a3b GGUF Q4_K_M (llama.cpp runner) with the agent Modelfile settings, loops.py thinking ON, 2 runs
+date: 2026-10-26 08:50:42 CET | ollama 0.40.8 | KV q8_0, num_ctx 131072 | temperature 0.6, top_p 0.95, top_k 20, presence 0
+    quantization        Q4_K_M             
+    temperature         0.6       
+---- run 1
+pp=0.0 think=True #1: ~  723 thinking tok,  1074 total tok, answered
+      -> giving you exactly 100 widgets.  *(Both are famous "cognitive reflection" puzzles designed to trick your brain into jumping to the intuitive-but-wrong answer!)*
+pp=0.0 think=True #2: ~ 4690 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 3714 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #4: ~ 2460 thinking tok,  4822 total tok, answered
+      -> `1.2.3` / `1.2.3.4.5` | ❌ No match | | ` 10.0.0.1 ` | ❌ No match (anchors reject spaces) |  Drop it into your validator, parser, or config file with confidence.
+pp=0.0 think=True #5: ~ 3449 thinking tok,  4420 total tok, answered
+      -> ersion` → `Use Workspace Version` 4. `Restart TS Server` → `Reload Window` 5. If still failing, add explicit `paths` to `tsconfig.json` as a bridge for the IDE.
+pp=0.0 think=True #6: ~ 3557 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~3098 thinking tok, cap hits 3/6
+---- run 2
+pp=0.0 think=True #1: ~  653 thinking tok,  1103 total tok, answered
+      -> ognitive Reflection Test questions designed to trap our fast, intuitive answers ($0.10 and 100 minutes). Let me know if you'd like more puzzles or explanations!
+pp=0.0 think=True #2: ~ 4232 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 1138 thinking tok,  1873 total tok, answered
+      -> t was first proven by Édouard Lucas in 1876 (remarkably, without computers) and is the 9th known Mersenne prime. Its exact value is `2,305,843,009,213,693,951`.
+pp=0.0 think=True #4: ~ 3076 thinking tok,  5872 total tok, answered
+      -> -5])\.){3}(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])\b   ``` - Works identically across all major regex engines (PCRE, Python, JavaScript, Java, Go, etc.).
+pp=0.0 think=True #5: ~ 4341 thinking tok,  5420 total tok, answered
+      -> port.  This divergence is normal: `tsc` and the VS Code LSP use different resolution paths. Aligning `paths`, `composite`, and TS version typically resolves it.
+pp=0.0 think=True #6: ~ 3652 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~2848 thinking tok, cap hits 2/6
+zz-qwen35b-gguf:latest    028b833857f4    24 GB    100% GPU     131072     llamacpp    Forever    

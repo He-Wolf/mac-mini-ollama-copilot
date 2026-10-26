@@ -1,0 +1,30 @@
+################ qwen3.6-35b-a3b-agent with temperature 1.0 (Modelfile: 0.6), loops.py thinking ON, 2 runs
+date: 2026-10-24 23:05:54 CEST | ollama 0.40.8 | KV q8_0, num_ctx 131072 | top_p 0.95, top_k 20, presence 0
+---- run 1
+pp=0.0 think=True #1: ~  862 thinking tok,  1323 total tok, answered
+      -> oth are famous "cognitive reflection test" questions designed to catch quick, intuitive answers. The correct answers require a moment of deliberate reasoning!)*
+pp=0.0 think=True #2: ~ 4762 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~  632 thinking tok,   944 total tok, answered
+      -> today using the **Lucas-Lehmer test**, a primality test specifically designed for numbers of the form $2^p - 1$. Its exact value is `2,305,843,009,213,693,951`.
+pp=0.0 think=True #4: ~ 3118 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> .255.255` | ✅ Match | Valid | | `256.1.2.3` | ❌ Fail | `256` out of range | | `01.2.3.4` | ❌ Fail | Leading zero rejected | | `1.2.3` | ❌ Fail | Missing octet |
+pp=0.0 think=True #5: ~ 3083 thinking tok,  4343 total tok, answered
+      -> d** in the consuming package or **`references` missing from the TS config**, as CLI compilation and IDE language service have divergent resolution requirements.
+pp=0.0 think=True #6: ~ 3714 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~2695 thinking tok, cap hits 3/6
+---- run 2
+pp=0.0 think=True #1: ~  603 thinking tok,   993 total tok, answered
+      -> meframe.  *(Both are famous "trick" questions from the Cognitive Reflection Test, designed to override fast, intuitive answers with slower, logical reasoning.)*
+pp=0.0 think=True #2: ~ 4488 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #3: ~ 4076 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True #4: ~ 2900 thinking tok,  5148 total tok, answered
+      -> ss()`, Java's `InetAddress.parse()`, or C#'s `IPAddress.TryParse()`) for validation, as they handle edge cases, IPv4-mapped IPv6, and network prefixes natively.
+pp=0.0 think=True #5: ~ 3026 thinking tok,  4316 total tok, answered
+      -> s.  In 90% of cases, this is resolved by **adding `references` + matching `paths` to the consuming package's `tsconfig.json`** and **restarting the TS server**.
+pp=0.0 think=True #6: ~ 3633 thinking tok,  6000 total tok, CAP HIT (loop/overthink)
+      -> -
+pp=0.0 think=True SUMMARY: avg ~3121 thinking tok, cap hits 3/6

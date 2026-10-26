@@ -70,10 +70,17 @@ the prompt.
 
 The Qwen 35B tends to overthink. 6 tricky prompts with thinking on and a 6,000-token cap:
 
-| presence_penalty | did not finish |
+| Variant (everything else as in the agent Modelfile) | did not finish |
 |---|---|
-| 0 (Qwen "precise coding") | 3 / 6, rerun: 4 / 6 |
-| 1.5 (Qwen "thinking, general") | 2 / 6 |
+| MLX nvfp4, temperature 0.6, presence_penalty 0 (Qwen "precise coding") | 3 / 6, rerun: 4 / 6 |
+| MLX nvfp4, presence_penalty 1.5 (Qwen "thinking, general") | 2 / 6 |
+| MLX nvfp4, temperature 1.0 (Qwen's thinking-mode recommendation) | 3 / 6, 3 / 6 |
+| GGUF Q4_K_M on the llama.cpp runner (`qwen3.6:35b-a3b-q4_K_M`) | 3 / 6, 2 / 6 |
+
+Sampling, quantization and runner do not change it: the same two prompts (the Python bug fix and
+"count the digit 1") got stuck in every run. Ornith 1.5, a fine-tune of the same base model, ran
+the same test on the same server without a single unfinished prompt, so this is how the Qwen 3.6
+35B model itself behaves on hard questions, not an Ollama or quantization problem.
 
 Given 16,000 tokens, two of them still had no answer after ~11k thinking tokens, with 0%
 verbatim repetition: not a copy-paste loop but endless re-checking. **With thinking off,

@@ -1,0 +1,21 @@
+# Tiel Coder 35B-A3B (Ornith 1.5 re-quantized with an imatrix, "Sharp" chat template, trained MTP head)
+FROM hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL
+
+# 128k context. Copilot (OpenAI-compatible API) cannot set this per request.
+PARAMETER num_ctx 131072
+
+# Safety cap: VS Code extension sends no output limit, so a runaway thinking session
+# would otherwise run until the 128k context is full (~40 min). 16k tokens ~ 1500 lines.
+PARAMETER num_predict 16384
+
+# Multi-token prediction with the model's MTP head. Measured decode (500 tokens of code):
+# off 47.5, 2 drafts 68.3, 3 drafts 64.8, 4 drafts 62.5 tok/s
+PARAMETER draft_num_predict 2
+
+# Tiel's sampling for agentic coding (model card)
+PARAMETER temperature 0.6
+PARAMETER top_p 0.95
+PARAMETER top_k 20
+PARAMETER min_p 0
+PARAMETER presence_penalty 0
+PARAMETER repeat_penalty 1

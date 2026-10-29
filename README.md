@@ -2,8 +2,8 @@
 
 A headless Mac mini serving local coding models over the LAN with Ollama, used as a coding
 agent from VS Code with GitHub Copilot (bring your own model). Includes the settings, the
-benchmark scripts, raw results, and a [comparison of 8 local coding models](#model-comparison-8-local-coding-models):
-Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
+benchmark scripts, raw results, and a [comparison of 9 local coding models](#model-comparison-9-local-coding-models):
+Tiel Coder, Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
 
 Tested October 2026: Mac mini M4 Pro, 48 GB, macOS 26.5.1, Ollama 0.40.8 (MLX runner),
 llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
@@ -14,11 +14,12 @@ llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 
 | Model (Ollama tag) | Weights | Prefill 8k / 30k | Decode | Thinking | Use it for |
 |---|---|---|---|---|---|
-| **`ornith-1.5:35b`** (MoE, 3B active) | 23 GB | 677 / 494 tok/s | 59 tok/s | **on** | **everyday agent work** (recommended) |
+| **Tiel Coder** (`hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL`, MoE, 3B active) | 23 GB | 647 / 483 tok/s | **66 tok/s** (MTP) | **on** | **everyday agent work** (recommended) |
+| `ornith-1.5:35b` (MoE, 3B active) | 23 GB | 677 / 494 tok/s | 59 tok/s | **on** | everyday agent work, fallback |
 | `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **713 / 551 tok/s** | **63 tok/s** | **off** (overthinks) | fast agent work, baseline |
 | `qwen3.8:27b-mlx` (dense) | 18 GB | 99 / 91 tok/s | 28 tok/s | on (`medium`) | hard problems, when you can wait |
 
-Why these three and not the others: see the [model comparison](#model-comparison-8-local-coding-models)
+Why these four and not the others: see the [model comparison](#model-comparison-9-local-coding-models)
 (Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer were tested and dropped).
 
 A coding agent sends ~20-30k tokens on the first turn (system prompt, tool definitions,
@@ -57,6 +58,9 @@ the prompt.
   faster than ~17 tok/s without speculation (273 GB/s / ~16 GB of weights); it does 28.5.
   The separate `-mtp-` GGUF tags bring the same trick to the slower llama.cpp runner.
 - **MTP / DFlash speed up decode only, not prefill.**
+- **GGUF models with their own MTP head** (e.g. Tiel Coder) use it on the llama.cpp runner when
+  the Modelfile sets `PARAMETER draft_num_predict`. Tiel decode: 47.5 tok/s without MTP,
+  68.3 / 64.8 / 62.5 tok/s with 2 / 3 / 4 drafts, so 2 is the best setting.
 - **q8_0 KV cache is free:** same prefill and decode speed as f16, ~2 GB less memory at 128k.
 - **`num_batch` has no effect on the MLX runner** (708 / 711 / 712 tok/s at 512 / 2048 / 4096).
 - **KV cache type is server-wide** (`OLLAMA_KV_CACHE_TYPE`), it cannot go in a Modelfile.
@@ -88,12 +92,13 @@ the 35B answered the same prompts correctly in 76-1,000 tokens.** Hence:
 
 - 35B: **thinking off by default** (`"qwen3.6-35b-a3b-agent:latest": false`); turn it on only
   for a hard question you are willing to wait for.
-- Ornith 1.5 does not have this problem (0 / 6 unfinished, see the comparison), so it runs with thinking on.
+- Ornith 1.5 and Tiel Coder do not have this problem (0 / 6 unfinished, see the comparison), so
+  they run with thinking on.
 - All Modelfiles set **`num_predict 16384`**. The VS Code Ollama extension sends no output
   limit, so without a cap a runaway generation runs until the 128k context is full (~40 min).
 - Test it yourself: `python3 bench/loops.py http://localhost:8080 qwen3.6-35b-a3b-agent 0`
 
-## Model comparison: 8 local coding models
+## Model comparison: 9 local coding models
 
 All measured on the same Mac mini (M4 Pro, 48 GB, Ollama 0.40.8, q8_0 KV cache, 128k context)
 with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](results/).
@@ -105,6 +110,7 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 | Flint 40B-A2B (`flint:latest`) | MoE, 2.5B active | 22 GB | **724** / 564 | **103** / **81** | 2 | 3 of 6 unfinished ⁴ |
 | Qwen 3.6 35B-A3B (`qwen3.6:35b-mlx`) | MoE, 3B active | 23 GB | 713 / 551 | 80 / 68 | **4** | 0 |
 | Ornith 1.5 35B-A3B (`ornith-1.5:35b`) ¹ | MoE, 3B active | 23 GB | 677 / 494 | 59 / 50 | **0** | 0 |
+| Tiel Coder 35B-A3B (`hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL`) ¹ ⁶ | MoE, 3B active | 23 GB | 647 / 483 | 66 / 52 | **0** | 2 ⁷ |
 | Sage-A1.5 35B-A3B (`hf.co/InternScience/Sage-A1.5-Q4_K_M-GGUF`) ¹ | MoE, 3B active | 21 GB | 677 / 513 | 57 / 48 | **4** | 1 of 6 unfinished ⁵ |
 | Nemotron 3.5 Lightning (`nemotron-3.5-lightning:30b-a3b-nvfp4`) | hybrid Mamba-MoE, 3B active | 19 GB | 674 / **584** | 87 / 71 | **0** | 1 (2^61−1 "not prime") |
 | Laguna XS 2.1 (`laguna-xs-2.1:nvfp4`) | MoE, 3B active | 20 GB | 568 / 435 | 107 / 69 | 3 | 1 (2^61−1 "not prime") |
@@ -117,6 +123,10 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 ³ DFlash: +50% decode at 95% draft acceptance, prefill unchanged.
 ⁴ Flint keeps reasoning with thinking off: answers ran to the 6,000-token cap or came back empty.
 ⁵ Sage reasoned in the visible answer with thinking off ("This is clean. I'll use this. One more: …") until the cap.
+⁶ Ornith 1.5 re-quantized with an importance matrix, a shorter-answer ("Sharp") chat template and a
+trained MTP head (`draft_num_predict 2`). With thinking on it used ~1,430 thinking tokens on average
+(Ornith ~1,600) and answered the easy prompts much more briefly (bat-and-ball: 196 tokens in total vs 555).
+⁷ "Count the digit 1": 100 × 3 = **900** (correct: 300); 2^61−1 correctly called prime, but "the 12th" Mersenne prime (it is the 9th).
 
 - **Prefill** = cold prompt processing (unique prefix, no cache hit). Tokenizers differ: the same
   8k-token text is 6,780 tokens for Flint and 7,595 for Qwen, so Flint's lead is ~10% larger in practice.
@@ -130,22 +140,24 @@ with [bench/run-model-tests.sh](bench/run-model-tests.sh). Raw logs: [results/](
 
 | Model | Terminal-Bench 2.1 | SWE-bench Pro | SWE-bench Verified |
 |---|---|---|---|
-| Qwen 3.8 27B | **73.0** | **61.7** ⁶ | not reported |
-| Ornith 1.5 35B-A3B | 67.8 | 59.6 | **79.0** |
+| Qwen 3.8 27B | **73.0** | **61.7** ⁸ | not reported |
+| Ornith 1.5 35B-A3B (and Tiel Coder ¹⁰) | 67.8 | 59.6 | **79.0** |
 | Sage-A1.5 35B-A3B | not reported | 61.2 | not reported |
 | Flint 40B-A2B | 54.9 | (89.7 on "v2", not comparable) | 74.2 |
-| Qwen 3.6 35B-A3B | 52.5 ⁷ | 49.5 | 73.4 |
+| Qwen 3.6 35B-A3B | 52.5 ⁹ | 49.5 | 73.4 |
 | Muse Glimmer 30B | 51.7 | 51.2 | 76.0 |
 | Laguna XS 2.1 | 37.5 (Terminal-Bench **2.0**) | 47.6 | 70.9 |
 | Nemotron 3.5 Lightning (NVFP4) | 23.5 | – | 52.8 |
 
-⁶ on Qwen's corrected task set · ⁷ as listed on the Ornith card; Qwen's own card reports Terminal-Bench 2.0: 51.5
+⁸ on Qwen's corrected task set · ⁹ as listed on the Ornith card; Qwen's own card reports Terminal-Bench 2.0: 51.5 ·
+¹⁰ Tiel Coder has Ornith's weights and publishes no benchmark runs of its own
 
 Terminal-Bench is the closest to Copilot agent mode / Hermes-style work (multi-step tool use in a
 terminal); SWE-bench Pro is harder and less contaminated than SWE-bench Verified. Each vendor uses its
 own harness and settings, so only large gaps are meaningful. Sources: the model cards of
 [Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B), [Qwen3.6-35B-A3B](https://huggingface.co/Qwen/Qwen3.6-35B-A3B),
-[Ornith-1.5-35B-A3B](https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B), [Sage-A1.5](https://huggingface.co/InternScience/Sage-A1.5),
+[Ornith-1.5-35B-A3B](https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B),
+[Tiel-Coder](https://huggingface.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP), [Sage-A1.5](https://huggingface.co/InternScience/Sage-A1.5),
 [Flint](https://huggingface.co/RecursiveSI/flint),
 [Laguna-XS-2.1](https://huggingface.co/poolside/Laguna-XS-2.1) and
 [Nemotron-3.5-Lightning NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4);
@@ -153,9 +165,13 @@ Muse Glimmer's numbers as listed on the Qwen3.8 and Ornith cards.
 
 ### Verdict
 
+- **Tiel Coder: best choice with thinking on.** Ornith's weights with shorter thinking and answers
+  and ~12% faster decode (MTP head), ~4% slower prefill. Keep thinking on: with thinking off it got 2
+  of 6 answers wrong. In VS Code thinking is always on for it anyway.
 - **Ornith 1.5 35B-A3B: best all-rounder.** Strong benchmarks, no overthinking with thinking on,
-  correct with thinking off, nearly as fast as Qwen. Reported to occasionally break tool calls in
-  very long sessions: try it in real work before switching.
+  correct with thinking off, nearly as fast as Qwen. Use it when thinking is off (e.g. Hermes with
+  `reasoning_effort: none`). Reported to occasionally break tool calls in very long sessions: try it
+  in real work before switching.
 - **Qwen 3.6 35B-A3B: fast, but use it with thinking off.** With thinking on it left 3-4 of 6 prompts
   unfinished in two runs.
 - **Sage-A1.5: same speed as Ornith and a similar SWE-bench Pro score, but overthinks like its Qwen
@@ -209,14 +225,16 @@ ollama pull qwen3.8:27b-mlx      # 18 GB
 ollama create qwen3.6-35b-a3b-agent -f modelfiles/Modelfile.qwen3.6-35b-a3b-agent
 ollama create qwen3.8-27b-agent     -f modelfiles/Modelfile.qwen3.8-27b-agent
 
-# the recommended everyday model (see the model comparison above)
+# the recommended everyday models (see the model comparison above)
+ollama pull hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL   # 23 GB
+ollama create tiel-coder-agent      -f modelfiles/Modelfile.tiel-coder-agent
 ollama pull ornith-1.5:35b       # 22 GB
 ollama create ornith-1.5-agent      -f modelfiles/Modelfile.ornith-1.5-agent
 ```
 
-Ornith reports no thinking levels to clients, so the VS Code extension ignores
-`ollama.thinkingLevels` for it: it always runs with thinking on (the server default), which is
-fine because it did not overthink in the tests.
+Tiel Coder and Ornith report no thinking levels to clients, so the VS Code extension ignores
+`ollama.thinkingLevels` for them: they always run with thinking on (the server default), which is
+fine because they did not overthink in the tests. Ollama uses Tiel's own chat template from the GGUF.
 
 The Modelfiles set a 128k context (Copilot cannot set `num_ctx` per request) and Qwen's
 recommended sampling for coding (temperature 0.6, top_p 0.95, top_k 20).
@@ -231,8 +249,8 @@ Install the **Ollama** extension (publisher Ollama, id `ollama.ollama`), then ad
   `fetch failed: connect ECONNREFUSED`.
 - Do **not** also add an `ollama-models` entry to `chatLanguageModels.json`: it is listed in
   addition to the built-in group, so every model appears twice.
-- Hide the base tags (`qwen3.6:35b-mlx`, `qwen3.8:27b-mlx`, `ornith-1.5:35b`) with the eye icon in
-  *Language Models*.
+- Hide the base tags (`qwen3.6:35b-mlx`, `qwen3.8:27b-mlx`, `ornith-1.5:35b`,
+  `hf.co/peculiar-ragdoll/Tiel-Coder-…`) with the eye icon in *Language Models*.
 - The gear icon of the built-in group says *"Language model provider group Ollama for vendor
   ollama-models not found"*. That is harmless: the group is configured via `ollama.*` settings.
 - Thinking comes only from `ollama.thinkingLevels` (read on every request, no reload).
@@ -246,6 +264,7 @@ prefill the whole conversation cold.
 
 ```bash
 export MAC_USER=your-mac-user MAC_HOST=192.168.1.50
+./client/switch-model.sh tiel         # preload Tiel Coder (thinking always on)
 ./client/switch-model.sh ornith       # preload Ornith (thinking always on)
 ./client/switch-model.sh 35b          # preload the Qwen 35B, thinking off
 ./client/switch-model.sh 27b xhigh    # 27B with maximum thinking

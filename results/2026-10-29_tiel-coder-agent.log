@@ -1,0 +1,53 @@
+################ tiel-coder-agent
+date: 2026-10-29 09:49:16 CET | ollama 0.40.8 | Apple M4 Pro 48 GB | macOS 26.5.1 | KV q8_0, num_ctx 131072
+    architecture        qwen35moe             
+    parameters          447M                  
+    context length      262144                
+    quantization        Q4_K_M                
+    tools         
+    thinking      
+    completion    
+    vision        
+    architecture        clip       
+    parameters          446.57M    
+    presence_penalty     0         
+    temperature          0.6       
+    top_k                20        
+    top_p                0.95      
+    draft_num_predict    2         
+tool call: [{"id": "1nwqn0XIiWwUUJMDaPqJnSZONrnxXxR0", "function": {"index": 0, "name": "read_file", "arguments": {"filePath": "src/main.py"}}}]
+tiel-coder-agent             cold   8k: prefill   7773 tok     647 tok/s ( 12.0s) | gen  42.4 tok/s | wall  13.0s
+tiel-coder-agent             warm   8k: prefill   7833 tok   38555 tok/s (  0.2s) | gen  61.6 tok/s | wall   0.5s
+tiel-coder-agent             cold  32k: prefill  30312 tok     483 tok/s ( 62.8s) | gen  37.9 tok/s | wall  64.3s
+tiel-coder-agent             warm  32k: prefill  30388 tok  101789 tok/s (  0.3s) | gen  44.0 tok/s | wall   0.8s
+tiel-coder-agent               ctx   0k: prefill    384 tok/s | decode 500 tok @  66.4 tok/s
+tiel-coder-agent               ctx  30k: prefill    569 tok/s | decode 500 tok @  52.3 tok/s
+---- loops, thinking ON
+pp=0.0 think=True #1: ~   85 thinking tok,   196 total tok, answered
+      -> ch is $1 more; total = $1.10.)  100 machines: **5 minutes**. Each machine makes one widget in 5 minutes, so 100 machines make 100 widgets in the same 5 minutes.
+pp=0.0 think=True #2: ~ 2811 thinking tok,  4275 total tok, answered
+      ->  qualifying value fill `b` without comparing to `None`.  Behavior: returns the second largest distinct value, or `None` if fewer than two distinct values exist.
+pp=0.0 think=True #3: ~  187 thinking tok,   524 total tok, answered
+      -> terating this recurrence yields 0, confirming primality.  This was first established by Édouard Lucas in 1876—M₆₁ was the largest known prime for over 70 years.
+pp=0.0 think=True #4: ~ 1211 thinking tok,  2353 total tok, answered
+      -> l characters only. If you're validating input that may have surrounding whitespace or a trailing newline, strip it first rather than adding `\s` to the pattern.
+pp=0.0 think=True #5: ~ 4091 thinking tok,  4634 total tok, answered
+      -> `.ts`/`.js` extensions to the import.  Start at #1 and #3, since the single-package isolation most often means that package's own mapping or its workspace link.
+pp=0.0 think=True #6: ~  174 thinking tok,   476 total tok, answered
+      -> igit = 1:** each block of 100 contains 10 (e.g., 10–19) × 10 blocks → 100 times - **Hundreds digit = 1:** 100–199 → 100 times  Total: 100 + 100 + 100 = **300**.
+pp=0.0 think=True SUMMARY: avg ~1426 thinking tok, cap hits 0/6
+---- loops, thinking OFF
+pp=0.0 think=False #1: ~    0 thinking tok,    75 total tok, answered
+      -> , totaling $1.10.  100 machines take 5 minutes. Each machine makes 1 widget in 5 minutes, so 100 machines make 100 widgets simultaneously in the same 5 minutes.
+pp=0.0 think=False #2: ~    0 thinking tok,   350 total tok, answered
+      -> - `x > b` (with `b` possibly `None`) handles the second value, including when it's negative. - Explicit check raises when a second distinct value doesn't exist.
+pp=0.0 think=False #3: ~    0 thinking tok,   163 total tok, answered
+      -> cas–Lehmer**: compute the sequence s₁ = 4, sₙ₊₁ = sₙ² − 2 (mod M), and M is prime iff s₆₀ ≡ 0 (mod M). This holds for p = 61.  So it is the 12th Mersenne prime.
+pp=0.0 think=False #4: ~    0 thinking tok,   309 total tok, answered
+      -> larger text, drop the anchors and use word boundaries `\b` instead (though `\b` treats the leading `.` of a following octet specially, so verify your use case).
+pp=0.0 think=False #5: ~    0 thinking tok,   268 total tok, answered
+      ->  it even though `tsc -b` traverses via references.  6. Stale TS Server: VS Code's TS Server cached the old program (restart TS Server / reload window fixes it).
+pp=0.0 think=False #6: ~    0 thinking tok,   167 total tok, answered
+      -> 100 times - **Hundreds place:** 1 appears in 100–199 → 100 times  Total: 100 × 3 = **900**.  (Including 000 adds no 1s, so the count from 1 to 999 is the same.)
+pp=0.0 think=False SUMMARY: avg ~0 thinking tok, cap hits 0/6
+tiel-coder-agent:latest    9efd63881833    23 GB    100% GPU     131072     llamacpp    Forever    

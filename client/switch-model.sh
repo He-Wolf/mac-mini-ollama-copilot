@@ -3,7 +3,7 @@
 # used by the VS Code Ollama extension. Run it on the machine where VS Code runs
 # (Git Bash on Windows, or a terminal on macOS/Linux). Needs ssh, curl and jq.
 #
-# Usage: ./switch-model.sh <27b|35b|ornith> [off|on|low|medium|xhigh]   (thinking; default: 35b off, 27b on)
+# Usage: ./switch-model.sh <27b|35b|ornith|tiel> [off|on|low|medium|xhigh]   (thinking; default: 35b off, 27b on)
 #        ./switch-model.sh status
 #
 # Thinking cannot be set on the server (Ollama Modelfiles have no "think" option).
@@ -12,8 +12,8 @@
 # It applies to the next request, no window reload needed.
 #   27b: off | low | medium | xhigh   ("on" = medium)
 #   35b: off | on                      (any level = on)
-#   ornith: always on in VS Code. Ornith reports no thinking levels, so the extension
-#           ignores ollama.thinkingLevels for it and the server default (thinking on) applies.
+#   ornith, tiel: always on in VS Code. They report no thinking levels, so the extension
+#           ignores ollama.thinkingLevels for them and the server default (thinking on) applies.
 
 # --- edit these, or set them as environment variables ---
 REMOTE_USER="${MAC_USER:-your-mac-user}"
@@ -31,6 +31,7 @@ case "$1" in
     27b)    MODEL="qwen3.8-27b-agent" ;;
     35b)    MODEL="qwen3.6-35b-a3b-agent" ;;
     ornith) MODEL="ornith-1.5-agent" ;;
+    tiel)   MODEL="tiel-coder-agent" ;;
     status)
         echo "Loaded on ${REMOTE_HOST}:"
         curl -s --connect-timeout 10 "http://${REMOTE_HOST}:${SERVER_PORT}/api/ps" \
@@ -38,13 +39,14 @@ case "$1" in
         echo "VS Code ollama.thinkingLevels:"
         jq -r '."ollama.thinkingLevels" // {} | to_entries[] | "  \(.key): \(.value)"' "$VSCODE_SETTINGS"
         exit 0 ;;
-    *)      echo "Usage: $0 <27b|35b|ornith> [off|on|low|medium|xhigh] | status"; exit 1 ;;
+    *)      echo "Usage: $0 <27b|35b|ornith|tiel> [off|on|low|medium|xhigh] | status"; exit 1 ;;
 esac
 
 # default: thinking off for the 35B (it tends to overthink), on for the 27B
 [ "$MODEL" = "qwen3.6-35b-a3b-agent" ] && THINKING="${2:-off}" || THINKING="${2:-on}"
 case "$MODEL:$THINKING" in
-    ornith-1.5-agent:*)                 [ -n "$2" ] && echo "Note: Ornith's thinking cannot be changed from VS Code (always on)."
+    ornith-1.5-agent:*|tiel-coder-agent:*)
+                                        [ -n "$2" ] && echo "Note: thinking of ${MODEL} cannot be changed from VS Code (always on)."
                                         THINKING="on (fixed)"; THINK_VAL="" ;;
     *:off)                              THINK_VAL="false" ;;
     qwen3.8-27b-agent:on)               THINK_VAL='"medium"' ;;

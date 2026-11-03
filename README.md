@@ -5,6 +5,9 @@ agent from VS Code with GitHub Copilot (bring your own model). Includes the sett
 benchmark scripts, raw results, and a [comparison of 9 local coding models](#model-comparison-9-local-coding-models):
 Tiel Coder, Ornith 1.5, Qwen 3.6 35B-A3B, Qwen 3.8 27B, Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer.
 
+A 125B model on the same Mac: [Qwen3.8-Flash-Next with Strata](STRATA.md) (all experts in
+memory, 128k context, ~280 tok/s prefill, ~31 tok/s decode).
+
 Tested October 2026: Mac mini M4 Pro, 48 GB, macOS 26.5.1, Ollama 0.40.8 (MLX runner),
 llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 

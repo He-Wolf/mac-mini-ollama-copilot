@@ -1,0 +1,15 @@
+==== chunk-2048: --tune skip --set STRATA_METAL_PROMPT_CHUNK=2048
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 2048 (experts v2, QSA v1, matmul2d layout other; 2.77 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7588 tok     270 tok/s ( 28.1s) | gen  24.4 tok/s | wall  29.8s
+qwen3.8-flash-next-gyro-gyro cold  32k: prefill  30114 tok     266 tok/s (113.1s) | gen  29.1 tok/s | wall 115.3s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     44 tok/s | decode 500 tok @  32.5 tok/s | draft 387/443 accepted
+==== chunk-4096: --tune skip --set STRATA_METAL_PROMPT_CHUNK=4096
+strata metal: prompts on the matrix units in chunks of 2048 (experts v2, QSA v1, matmul2d layout other; 2.77 GB of buffers, in the expert arena while a prompt runs)
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 4096 (experts v2, QSA v1, matmul2d layout other; 4.90 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7584 tok     279 tok/s ( 27.2s) | gen  24.5 tok/s | wall  29.4s
+qwen3.8-flash-next-gyro-gyro cold  32k: prefill  30133 tok     280 tok/s (107.5s) | gen  24.9 tok/s | wall 109.7s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     43 tok/s | decode 500 tok @  32.5 tok/s | draft 375/417 accepted
+DONE

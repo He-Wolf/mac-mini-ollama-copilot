@@ -1,0 +1,31 @@
+==== baseline: --tune skip
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7575 tok     247 tok/s ( 30.7s) | gen  24.5 tok/s | wall  32.6s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     44 tok/s | decode 500 tok @  33.1 tok/s | draft 373/418 accepted
+==== cpu-share-off: --tune skip --set STRATA_PREFILL_CPU_SHARE=0
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7595 tok     245 tok/s ( 31.0s) | gen  26.3 tok/s | wall  33.2s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     44 tok/s | decode 500 tok @  32.2 tok/s | draft 363/413 accepted
+==== chunk-2048: --tune skip --set STRATA_METAL_PROMPT_CHUNK=2048
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 2048 (experts v2, QSA v1, matmul2d layout other; 2.77 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7593 tok     267 tok/s ( 28.4s) | gen  26.3 tok/s | wall  30.5s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     44 tok/s | decode 500 tok @  32.0 tok/s | draft 357/404 accepted
+==== drafting-mtp: --tune skip --drafting mtp
+strata metal: MTP draft round in one command buffer (embedding type 14 on the GPU: max |GPU - host| 0 over 8 rows)
+strata metal: MTP draft layer from ~/.local/share/strata/Strata-data/mtp/mtp-q2_0.gguf (0.89 GB, 9 norms folded), draft head over 106299 tokens
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7606 tok     238 tok/s ( 32.0s) | gen  22.9 tok/s | wall  34.4s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     39 tok/s | decode 500 tok @  28.7 tok/s | draft 238/266 accepted
+==== tune-quick: --tune quick
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+strata serve: DFlash2 drafter on (~/.local/share/strata/Strata-data/dflash2/qwen3.8-flash-next-dflash2.q4_0-selq4.pack, graphs captured in 0 ms); windows up to 8 tokens; no MTP layer is lo
+strata metal: prompts on the matrix units in chunks of 1024 (experts v2, QSA v1, matmul2d layout other; 1.71 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7597 tok     251 tok/s ( 30.3s) | gen  25.5 tok/s | wall  32.5s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     44 tok/s | decode 500 tok @  31.8 tok/s | draft 376/440 accepted
+DONE

@@ -1,0 +1,15 @@
+==== chunk-8192
+strata metal: prompts on the matrix units in chunks of 8192 (experts v2, QSA v1, matmul2d layout other; 9.16 GB of buffers, in the expert arena while a prompt runs)
+qwen3.8-flash-next-gyro-gyro cold  32k: prefill  30111 tok     274 tok/s (110.0s) | gen  22.7 tok/s | wall 111.9s
+==== final 128k run with chunk 4096
+qwen3.8-flash-next-gyro-gyro cold   8k: prefill   7586 tok     280 tok/s ( 27.1s) | gen  27.3 tok/s | wall  29.7s
+qwen3.8-flash-next-gyro-gyro warm   8k: prefill     21 tok      44 tok/s (  0.5s) | gen  22.9 tok/s | wall   1.1s
+qwen3.8-flash-next-gyro-gyro cold  32k: prefill  30144 tok     281 tok/s (107.3s) | gen  29.5 tok/s | wall 109.8s
+qwen3.8-flash-next-gyro-gyro warm  32k: prefill     22 tok      44 tok/s (  0.5s) | gen  20.0 tok/s | wall   1.3s
+qwen3.8-flash-next-gyro-gyro cold 120k: prefill 112676 tok     279 tok/s (404.2s) | gen  26.1 tok/s | wall 406.6s
+qwen3.8-flash-next-gyro-gyro warm 120k: prefill     21 tok      44 tok/s (  0.5s) | gen  23.2 tok/s | wall   1.2s
+qwen3.8-flash-next-gyro-gyro-s ctx   0k: prefill 48 tok @     45 tok/s | decode 500 tok @  31.0 tok/s | draft 374/442 accepted
+qwen3.8-flash-next-gyro-gyro-s ctx  30k: prefill 17233 tok @    278 tok/s | decode 500 tok @  31.0 tok/s | draft 357/395 accepted
+strata metal stream: resident footprint after the fill: the process holds 40.4 GB (36.8 GB resident), planned 40.8 GB, cap 43.8 GB
+vm.swapusage: total = 2048.00M  used = 923.75M  free = 1124.25M  (encrypted)
+DONE

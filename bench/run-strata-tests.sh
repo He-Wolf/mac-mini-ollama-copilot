@@ -1,10 +1,11 @@
 #!/bin/bash
-# Full test set for the model Strata is serving (OpenAI API on :8080), up to 128k context.
+# Full test set for the model Strata is serving (OpenAI API on :8081), up to 128k context.
 # Same prompts and sizes as run-model-tests.sh. Writes results/<date>_strata_<model>.log
 # Usage (on the Mac, from the repo root): bench/run-strata-tests.sh
 cd "$(dirname "$0")/.."
-U=http://localhost:8080
-M=$(curl -s $U/v1/models | python3 -c 'import sys,json;print(json.load(sys.stdin)["data"][0]["id"])')
+U=${STRATA_URL:-http://localhost:8081}
+export API_KEY=${API_KEY:-$(~/.local/bin/strata launch --show-key 2>/dev/null | tail -1)}
+M=$(curl -s -H "Authorization: Bearer $API_KEY" $U/v1/models | python3 -c 'import sys,json;print(json.load(sys.stdin)["data"][0]["id"])')
 mkdir -p results
 {
 echo "################ $M ($(~/.local/bin/strata --version 2>&1 | head -1))"

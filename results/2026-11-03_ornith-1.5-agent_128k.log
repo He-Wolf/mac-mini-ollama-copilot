@@ -1,0 +1,14 @@
+################ ornith-1.5-agent at 128k (Ollama 0.40.8)
+date: 2026-11-03 11:42:27 CET | Apple M4 Pro 48 GB | KV q8_0, num_ctx 131072, thinking off
+ornith-1.5-agent             cold   8k: prefill   7587 tok     676 tok/s ( 11.2s) | gen  53.8 tok/s | wall  26.5s
+ornith-1.5-agent             warm   8k: prefill   7648 tok   43462 tok/s (  0.2s) | gen  53.1 tok/s | wall   0.7s
+ornith-1.5-agent             cold  32k: prefill  30131 tok     491 tok/s ( 61.4s) | gen  37.7 tok/s | wall  63.1s
+ornith-1.5-agent             warm  32k: prefill  30216 tok  117460 tok/s (  0.3s) | gen  41.7 tok/s | wall   1.2s
+ornith-1.5-agent             cold 120k: prefill 112735 tok     245 tok/s (459.9s) | gen  26.5 tok/s | wall 462.6s
+ornith-1.5-agent             warm 120k: prefill 112822 tok  184647 tok/s (  0.6s) | gen  26.8 tok/s | wall   2.1s
+ornith-1.5-agent               ctx   0k: prefill    218 tok/s | decode 500 tok @  57.3 tok/s
+ornith-1.5-agent               ctx  30k: prefill    603 tok/s | decode 500 tok @  47.8 tok/s
+ornith-1.5-agent               ctx 120k: prefill    348 tok/s | decode 500 tok @  32.8 tok/s
+NAME                       ID              SIZE     PROCESSOR    CONTEXT    RUNNER      UNTIL   
+ornith-1.5-agent:latest    6c75036cb5e1    22 GB    100% GPU     131072     llamacpp    Forever    
+DONE

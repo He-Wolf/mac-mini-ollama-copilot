@@ -1,0 +1,28 @@
+[
+	{
+		"name": "Strata",
+		"vendor": "customendpoint",
+		"apiType": "chat-completions",
+		"models": [
+			{
+				"id": "qwen3.8-flash-next-gyro-gyro-s",
+				"name": "Qwen3.8 Flash-Next (Strata)",
+				"url": "http://192.168.1.50:8081/v1/chat/completions",
+				"toolCalling": true,
+				"vision": false,
+				"thinking": true,
+				"supportsReasoningEffort": [
+					"none",
+					"medium"
+				],
+				"maxInputTokens": 114688,
+				"maxOutputTokens": 16384
+			}
+		],
+		"settings": {
+			"qwen3.8-flash-next-gyro-gyro-s": {
+				"reasoningEffort": "medium"
+			}
+		}
+	}
+]

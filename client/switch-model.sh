@@ -4,7 +4,12 @@
 # (Git Bash on Windows, or a terminal on macOS/Linux). Needs ssh, curl and jq.
 #
 # Usage: ./switch-model.sh <27b|35b|ornith|tiel> [off|on|low|medium|xhigh]   (thinking; default: 35b off, 27b on)
+#        ./switch-model.sh strata     (Qwen3.8-Flash-Next on Strata instead of Ollama, see STRATA.md)
 #        ./switch-model.sh status
+#
+# Strata needs ~40 GB, so Ollama and Strata never run together: "strata" stops Ollama and raises
+# the GPU limit to 42 GB (sudo, asks for the Mac password); an Ollama model stops Strata and
+# starts Ollama again. A reboot of the Mac always comes back with Ollama and the 40 GB limit.
 #
 # Thinking cannot be set on the server (Ollama Modelfiles have no "think" option).
 # The VS Code Ollama extension sends it with every request, taken from the
@@ -19,6 +24,7 @@
 REMOTE_USER="${MAC_USER:-your-mac-user}"
 REMOTE_HOST="${MAC_HOST:-192.168.1.50}"
 SERVER_PORT="${MAC_PORT:-8080}"
+STRATA_PORT="${STRATA_PORT:-8081}"
 
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*) VSCODE_SETTINGS="$APPDATA/Code/User/settings.json" ;;
@@ -32,15 +38,63 @@ case "$1" in
     35b)    MODEL="qwen3.6-35b-a3b-agent" ;;
     ornith) MODEL="ornith-1.5-agent" ;;
     tiel)   MODEL="tiel-coder-agent" ;;
+    strata) MODEL="strata" ;;
     status)
-        echo "Loaded on ${REMOTE_HOST}:"
-        curl -s --connect-timeout 10 "http://${REMOTE_HOST}:${SERVER_PORT}/api/ps" \
-            | jq -r '.models[] | "  \(.name)  ctx=\(.context_length)  vram=\(.size_vram/1e9|floor)GB"'
+        echo "Ollama on ${REMOTE_HOST}:${SERVER_PORT}:"
+        if PS=$(curl -sf --connect-timeout 10 "http://${REMOTE_HOST}:${SERVER_PORT}/api/ps"); then
+            echo "$PS" | jq -r '.models[] | "  \(.name)  ctx=\(.context_length)  vram=\(.size_vram/1e9|floor)GB"'
+        else
+            echo "  not running"
+        fi
+        CODE=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 10 "http://${REMOTE_HOST}:${STRATA_PORT}/v1/models")
+        case "$CODE" in 200|401) echo "Strata on ${REMOTE_HOST}:${STRATA_PORT}: running" ;;
+                        *)       echo "Strata on ${REMOTE_HOST}:${STRATA_PORT}: not running" ;; esac
         echo "VS Code ollama.thinkingLevels:"
         jq -r '."ollama.thinkingLevels" // {} | to_entries[] | "  \(.key): \(.value)"' "$VSCODE_SETTINGS"
         exit 0 ;;
-    *)      echo "Usage: $0 <27b|35b|ornith|tiel> [off|on|low|medium|xhigh] | status"; exit 1 ;;
+    *)      echo "Usage: $0 <27b|35b|ornith|tiel|strata> [off|on|low|medium|xhigh] | status"; exit 1 ;;
 esac
+
+# --- Strata: stop Ollama, 42 GB GPU limit, start Qwen3.8-Flash-Next (settings: STRATA.md) ---
+if [ "$MODEL" = "strata" ]; then
+    echo "============================================"
+    echo "Switching ${REMOTE_HOST} to Strata (Qwen3.8-Flash-Next Gyro-S, port ${STRATA_PORT})"
+    echo "============================================"
+    # One SSH session with a terminal, so sudo can ask for the Mac password.
+    STRATA_SCRIPT='
+set -e
+if [ "$(sysctl -n iogpu.wired_limit_mb)" -lt 43008 ]; then
+    echo "[1/3] GPU memory limit -> 42 GB (sudo):"
+    sudo sysctl iogpu.wired_limit_mb=43008
+fi
+if launchctl print gui/$(id -u)/local.ollama.server >/dev/null 2>&1; then
+    echo "[2/3] Stopping Ollama..."
+    launchctl bootout gui/$(id -u)/local.ollama.server
+    sleep 3
+fi
+echo "[3/3] Starting Strata (about 1 min; the very first start downloads ~65 GB)..."
+~/.local/bin/strata launch --model gyro-s --family gyro --context 128k --vision off \
+    --tune skip --access lan --port '"${STRATA_PORT}"' --yes --no-tui --restart \
+    --set STRATA_METAL_STREAM=1 --set STRATA_METAL_ARENA_GB=30 \
+    --set conversation-cache-mib=1024 --set STRATA_METAL_PROMPT_CHUNK=4096 \
+    | grep -E "Ready|Network|API key|rror" || true
+'
+    ssh -t -o ConnectTimeout=10 "${REMOTE_USER}@${REMOTE_HOST}" "bash -c $(printf '%q' "$STRATA_SCRIPT")"
+    CODE=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 10 "http://${REMOTE_HOST}:${STRATA_PORT}/v1/models")
+    echo ""
+    echo "============================================"
+    case "$CODE" in
+        200|401) echo "SUCCESS: Strata is serving on http://${REMOTE_HOST}:${STRATA_PORT}/v1"
+                 echo "============================================"
+                 echo "In VS Code pick 'Qwen3.8 Flash-Next (Strata)' in the Copilot model picker."
+                 echo "API key: ssh ${REMOTE_USER}@${REMOTE_HOST} '~/.local/bin/strata launch --show-key'" ;;
+        *)       echo "WARNING: Strata does not answer on port ${STRATA_PORT} (HTTP ${CODE})."
+                 echo "============================================"
+                 echo "Engine log on the Mac: ~/.local/state/strata/launch/gyro-s-128k.engine.log" ;;
+    esac
+    read -p "Press any key to close..."
+    exit 0
+fi
 
 # default: thinking off for the 35B (it tends to overthink), on for the 27B
 [ "$MODEL" = "qwen3.6-35b-a3b-agent" ] && THINKING="${2:-off}" || THINKING="${2:-on}"
@@ -68,6 +122,17 @@ set -e
 MODEL="$1"
 export OLLAMA_HOST="127.0.0.1:$2"
 OLLAMA=/opt/homebrew/bin/ollama
+
+# Strata and Ollama never run together (see "strata" above)
+if pgrep -f 'strata --serve' >/dev/null; then
+    echo "[0/3] Stopping Strata..."
+    ~/.local/bin/strata launch --stop > /dev/null
+fi
+if ! launchctl print gui/$(id -u)/local.ollama.server >/dev/null 2>&1; then
+    echo "[0/3] Starting Ollama..."
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.ollama.server.plist
+    for i in $(seq 30); do curl -sf "http://${OLLAMA_HOST}/api/version" > /dev/null && break; sleep 1; done
+fi
 
 echo "[1/3] Unloading other models..."
 for m in $("$OLLAMA" ps | awk 'NR>1 {print $1}'); do

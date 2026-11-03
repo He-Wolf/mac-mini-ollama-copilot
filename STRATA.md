@@ -5,42 +5,48 @@ A 125B-parameter model (6B active per token) on the same Mac mini M4 Pro 48 GB, 
 the 35B-A3B at usable speed, with the full 128k context an agent needs.
 
 Tested 3 November 2026: Strata 0.2.10 (engine 0.1.56, Metal), macOS 26.5.1.
-Raw logs: [results/](results/) (files starting with `2026-11-03_strata`).
+Raw logs: [results/](results/) (files starting with `2026-11-03`). All three models measured on
+the same day with the same scripts, 128k context, 8-bit KV cache, thinking off.
 
 ## Results
 
 ### Speed, compared with the Ollama models
 
-| | **Flash-Next Gyro-S** (Strata) | Tiel Coder 35B-A3B (Ollama) | Qwen 3.8 27B dense (Ollama) |
+| | **Flash-Next Gyro-S** (Strata) | Ornith 1.5 35B-A3B (Ollama) | Qwen 3.8 27B dense (Ollama) |
 |---|---|---|---|
 | Parameters (total / active) | 125B / 6B | 35B / 3B | 27B / 27B |
-| Cold prefill 8k | **280 tok/s** (27 s) | 647 tok/s | TBD (99 tok/s on 22 Oct) |
-| Cold prefill 30k | **281 tok/s** (1.8 min) | 483 tok/s | TBD (91 tok/s on 22 Oct) |
-| Cold prefill ~113k | **279 tok/s** (6.7 min) | not measured | TBD |
-| Warm turn (cached prefix + new question) | 0.5 s at any length | 0.2-0.3 s | TBD |
-| Decode, short / 30k context | **31 / 31 tok/s** | 66 / 52 tok/s | 28.5 / 25.8 tok/s |
-| Decode after ~113k context | ~26 tok/s ¹ | not measured | TBD |
-| Memory | 40.4 GB | 23 GB | 19.3 GB |
+| Cold prefill 8k | 280 tok/s (27 s) | **676 tok/s** (11 s) | 99 tok/s (1.3 min) |
+| Cold prefill 30k | 281 tok/s (1.8 min) | **491 tok/s** (1 min) | 91 tok/s (5.5 min) |
+| Cold prefill ~113k | **279 tok/s (6.7 min)** | 245 tok/s (7.7 min) | 67 tok/s (28 min) |
+| Warm turn (cached prefix + new question), 8k / 30k / 113k | 0.5 / 0.5 / 0.5 s | 0.2 / 0.3 / 0.6 s | 0.4 / 0.5 / 0.9 s |
+| Decode, short / 30k context | 31 / 31 tok/s | **57 / 48 tok/s** | 27 / 25 tok/s |
+| Decode after ~69k context ¹ | 32 tok/s | 33 tok/s | 17 tok/s |
+| Generation after ~113k context ² | 26 tok/s | 27 tok/s | 12 tok/s |
+| Memory with 128k context | 40.4 GB | 22 GB | 30 GB |
 
-¹ Generation speed of the 128-token reply in the 113k prefill run (thinking off).
+¹ ~500 tokens of code ([bench/oa_tests.py](bench/oa_tests.py) / [bench/decode.py](bench/decode.py) `decode 120000`;
+the filler text tokenizes to ~69k tokens). ² The 128-token reply in the ~113k prefill run.
 
-- **Prefill does not slow down with context:** 279-281 tok/s from 8k to 113k. The Ollama models lose
-  speed as the context grows.
-- A Copilot agent's first turn (~29k tokens) takes **~1.8 min cold** (Tiel ~1 min, the 27B ~5 min).
-  After that the prompt cache answers each turn in ~0.5 s.
+- **Flash-Next's speed is flat from 8k to 113k** (279-281 tok/s prefill, 31-32 tok/s decode); the
+  Ollama models slow down as the context grows.
+- **At short and medium context Ornith is about 2× faster.** Around 100k tokens the two meet:
+  Flash-Next reads a full 128k context faster than Ornith, and decodes at the same speed.
+- **The 27B is the slowest everywhere**, and at 113k it needs 28 minutes for a cold prompt.
+- A Copilot agent's first turn (~29k tokens) takes **~1.8 min cold** on Flash-Next (Ornith ~1 min, the
+  27B ~5.5 min). After that the prompt cache answers each turn in ~0.5 s.
 
 ### Quality checks
 
-| | Flash-Next Gyro-S | Tiel Coder | Ornith 1.5 |
-|---|---|---|---|
-| Tool call (OpenAI API) | ✅ | ✅ | ✅ |
-| Thinking ON: unfinished of 6 | **0** | 0 | 0 |
-| Thinking ON: avg thinking tokens | ~2,280 | ~1,430 | ~1,600 |
-| Thinking OFF: wrong answers | **0 of 6** | 2 of 6 | 0 of 6 |
+| | Flash-Next Gyro-S | Ornith 1.5 |
+|---|---|---|
+| Tool call (OpenAI API) | ✅ | ✅ |
+| Thinking ON: unfinished of 6 | **0** | 0 |
+| Thinking ON: avg thinking tokens | ~2,280 | ~1,600 |
+| Thinking OFF: wrong answers | **0 of 6** | 0 of 6 |
 
 Same 6 prompts as in the [model comparison](README.md#model-comparison-9-local-coding-models)
 ([bench/oa_tests.py](bench/oa_tests.py) `loops`, 6,000-token cap). With thinking off it answered
-all six correctly, including details the smaller models got wrong (2^61−1 is the 9th Mersenne prime).
+all six correctly.
 Answers are fairly long: 400-1,200 tokens with thinking off.
 
 No official agentic coding benchmarks are published for Qwen3.8-Flash-Next or the Gyro-S pack.
@@ -102,7 +108,7 @@ GUI use, but heavy apps will push it into swap.
 
 ```bash
 ~/.local/bin/strata launch --model gyro-s --family gyro --context 128k --vision off \
-  --tune skip --access local --port 8080 --yes --no-tui --restart \
+  --tune skip --access lan --port 8081 --yes --no-tui --restart \
   --set STRATA_METAL_STREAM=1 --set STRATA_METAL_ARENA_GB=30 \
   --set conversation-cache-mib=1024 --set STRATA_METAL_PROMPT_CHUNK=4096
 ```
@@ -116,7 +122,7 @@ The first run downloads ~65 GB (model, draft layer, DFlash2 drafter).
 | `STRATA_METAL_PROMPT_CHUNK=4096` | +13% prefill (see below). |
 | `--vision off` | Saves ~0.9 GB (text only). |
 | `--context 128k` | KV cache int8 (default), ~1.7 GB at 128k. |
-| `--access local` | API only on the Mac. Use `--access lan` to reach it from other machines; Strata then requires an API key (`strata launch --show-key`). |
+| `--access lan --port 8081` | Reachable from other machines on the LAN, with an API key (`strata launch --show-key`). Port 8081 keeps Ollama's 8080 free. `--access local` limits it to the Mac. |
 
 ### Tuning (8k cold prefill / short decode)
 
@@ -134,15 +140,43 @@ The DFlash2 drafter has ~85-90% of its drafted tokens accepted.
 
 ## Using it
 
-- **API:** OpenAI-compatible at `http://<mac>:8080/v1` (chat completions with tool calls) and
-  Anthropic-compatible at `http://<mac>:8080`. Model id: `qwen3.8-flash-next-gyro-gyro-s`.
+- **API:** OpenAI-compatible at `http://<mac>:8081/v1` (chat completions with tool calls) and
+  Anthropic-compatible at `http://<mac>:8081`. Model id: `qwen3.8-flash-next-gyro-gyro-s`.
+- **API key:** required with `--access lan` (requests without it get 401). Show it on the Mac with
+  `~/.local/bin/strata launch --show-key`; it stays the same across restarts.
 - **Thinking off:** `"reasoning_effort": "none"` (or `"chat_template_kwargs": {"enable_thinking": false}`).
-- **VS Code Copilot:** the Ollama extension does not work with Strata; add it as a custom
-  OpenAI-compatible endpoint.
 - **One request at a time:** the DFlash2 drafter makes Strata serve requests one by one.
+
+### VS Code: GitHub Copilot custom endpoint
+
+The Ollama extension only talks to Ollama, so Strata is added as a Copilot custom endpoint (bring
+your own model). Add the group from [vscode/chatLanguageModels.strata.json](vscode/chatLanguageModels.strata.json)
+to `chatLanguageModels.json` in your VS Code user folder (`%APPDATA%\Code\User` on Windows,
+`~/Library/Application Support/Code/User` on macOS) and replace `192.168.1.50` with your Mac's IP.
+
+- On first use, Copilot asks for the API key of the "Strata" group: paste the key from `--show-key`.
+  It is kept in VS Code's secret storage, not in the JSON file.
+- **Thinking:** choose the reasoning effort in the model picker: `medium` = thinking on (default),
+  `none` = thinking off. Both gave correct answers in the tests; `none` answers faster.
+- `maxInputTokens` 114,688 + `maxOutputTokens` 16,384 = the 128k context.
+- Strata runs on **port 8081** so it never collides with Ollama's 8080. While Strata runs, Ollama is
+  stopped and the Ollama models in the picker show connection errors.
+- Start a new chat for Flash-Next: the first turn of a Copilot agent (~29k tokens) takes ~1.8 min cold.
 - **Back to Ollama:** `~/.local/bin/strata launch --stop`, then
   `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.ollama.server.plist`.
-  A reboot also restores Ollama and the 40 GB GPU limit.
+  A reboot also restores Ollama and the 40 GB GPU limit; Strata does not start at boot.
+
+### Switching from the laptop
+
+[client/switch-model.sh](client/switch-model.sh) switches between the two servers with one command
+(after installing Strata once, steps 1-3 above):
+
+```bash
+export MAC_USER=your-mac-user MAC_HOST=192.168.1.50
+./client/switch-model.sh strata     # stop Ollama, GPU limit 42 GB (asks for the Mac password), start Strata
+./client/switch-model.sh ornith     # stop Strata, start Ollama, load Ornith
+./client/switch-model.sh status     # what is running: Ollama models and/or Strata
+```
 
 ## Benchmarks
 
@@ -156,4 +190,11 @@ from the `timings` Strata returns.
 
 ## Verdict
 
-TBD after the Qwen 3.8 27B 128k run.
+- **Flash-Next on Strata is a usable "big model" mode for this Mac:** a 125B model with 128k context,
+  correct on every check, at ~280 tok/s prefill and ~31 tok/s decode at any context length.
+- **It replaces the Qwen 3.8 27B as the "think harder" option:** 3-4× faster prefill, faster decode,
+  and much faster at long context (6.7 min vs. 28 min for a cold 113k prompt).
+- **Ornith stays the everyday model:** about 2× faster up to ~30k tokens, which is where most agent
+  turns are, with a quarter of the memory.
+- **The cost:** Strata needs ~40 GB, so it cannot run next to Ollama, macOS keeps only ~6-8 GB,
+  and switching between the two means restarting servers.

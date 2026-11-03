@@ -24,7 +24,10 @@ def call(messages):
                 "chat_template_kwargs": {"enable_thinking": False}, "cache_prompt": True}
         url = base + "/v1/chat/completions"
     t = time.time()
-    r = json.load(urllib.request.urlopen(urllib.request.Request(url, json.dumps(body).encode(), {"Content-Type": "application/json"}), timeout=1800))
+    headers = {"Content-Type": "application/json"}
+    if __import__("os").environ.get("API_KEY"):
+        headers["Authorization"] = "Bearer " + __import__("os").environ["API_KEY"]
+    r = json.load(urllib.request.urlopen(urllib.request.Request(url, json.dumps(body).encode(), headers), timeout=1800))
     wall = time.time() - t
     if kind == "ollama":
         pn, ps = r["prompt_eval_count"], r["prompt_eval_duration"] / 1e9

@@ -17,10 +17,13 @@ llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 
 | Model (Ollama tag) | Weights | Prefill 8k / 30k | Decode | Thinking | Use it for |
 |---|---|---|---|---|---|
-| **Tiel Coder** (`hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL`, MoE, 3B active) | 23 GB | 647 / 483 tok/s | **66 tok/s** (MTP) | **on** | **everyday agent work** (recommended) |
-| `ornith-1.5:35b` (MoE, 3B active) | 23 GB | 677 / 494 tok/s | 59 tok/s | **on** | everyday agent work, fallback |
+| **`ornith-1.5:35b`** (MoE, 3B active) | 23 GB | 677 / 494 tok/s | 59 tok/s | **on** | **everyday agent work** (recommended) |
+| Tiel Coder (`hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL`, MoE, 3B active) | 23 GB | 647 / 483 tok/s | 66 tok/s (MTP) | on (only) | shorter answers, faster decode |
 | `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **713 / 551 tok/s** | **63 tok/s** | **off** (overthinks) | fast agent work, baseline |
 | `qwen3.8:27b-mlx` (dense) | 18 GB | 99 / 91 tok/s | 28 tok/s | on (`medium`) | hard problems, when you can wait |
+
+For hard problems, [Qwen3.8-Flash-Next on Strata](STRATA.md) (125B MoE) is faster than the 27B at every
+context length, but it needs ~40 GB and runs instead of Ollama, not next to it.
 
 Why these four and not the others: see the [model comparison](#model-comparison-9-local-coding-models)
 (Sage-A1.5, Flint, Nemotron 3.5 Lightning, Laguna XS 2.1 and Muse Glimmer were tested and dropped).
@@ -168,13 +171,11 @@ Muse Glimmer's numbers as listed on the Qwen3.8 and Ornith cards.
 
 ### Verdict
 
-- **Tiel Coder: best choice with thinking on.** Ornith's weights with shorter thinking and answers
-  and ~12% faster decode (MTP head), ~4% slower prefill. Keep thinking on: with thinking off it got 2
-  of 6 answers wrong. In VS Code thinking is always on for it anyway.
 - **Ornith 1.5 35B-A3B: best all-rounder.** Strong benchmarks, no overthinking with thinking on,
-  correct with thinking off, nearly as fast as Qwen. Use it when thinking is off (e.g. Hermes with
-  `reasoning_effort: none`). Reported to occasionally break tool calls in very long sessions: try it
-  in real work before switching.
+  correct with thinking off, nearly as fast as Qwen. Reported to occasionally break tool calls in
+  very long sessions: try it in real work before switching.
+- **Tiel Coder: Ornith with shorter thinking and answers** and ~12% faster decode (MTP head), ~4%
+  slower prefill. Use it with thinking on only: with thinking off it got 2 of 6 answers wrong.
 - **Qwen 3.6 35B-A3B: fast, but use it with thinking off.** With thinking on it left 3-4 of 6 prompts
   unfinished in two runs.
 - **Sage-A1.5: same speed as Ornith and a similar SWE-bench Pro score, but overthinks like its Qwen
@@ -228,14 +229,16 @@ ollama pull qwen3.8:27b-mlx      # 18 GB
 ollama create qwen3.6-35b-a3b-agent -f modelfiles/Modelfile.qwen3.6-35b-a3b-agent
 ollama create qwen3.8-27b-agent     -f modelfiles/Modelfile.qwen3.8-27b-agent
 
-# the recommended everyday models (see the model comparison above)
-ollama pull hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL   # 23 GB
-ollama create tiel-coder-agent      -f modelfiles/Modelfile.tiel-coder-agent
+# the recommended everyday model (see the model comparison above)
 ollama pull ornith-1.5:35b       # 22 GB
 ollama create ornith-1.5-agent      -f modelfiles/Modelfile.ornith-1.5-agent
+
+# optional: Tiel Coder (Ornith with shorter answers and an MTP head)
+ollama pull hf.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF-MTP:UD-Q4_K_XL   # 23 GB
+ollama create tiel-coder-agent      -f modelfiles/Modelfile.tiel-coder-agent
 ```
 
-Tiel Coder and Ornith report no thinking levels to clients, so the VS Code extension ignores
+Ornith and Tiel Coder report no thinking levels to clients, so the VS Code extension ignores
 `ollama.thinkingLevels` for them: they always run with thinking on (the server default), which is
 fine because they did not overthink in the tests. Ollama uses Tiel's own chat template from the GGUF.
 
@@ -267,11 +270,12 @@ prefill the whole conversation cold.
 
 ```bash
 export MAC_USER=your-mac-user MAC_HOST=192.168.1.50
-./client/switch-model.sh tiel         # preload Tiel Coder (thinking always on)
 ./client/switch-model.sh ornith       # preload Ornith (thinking always on)
+./client/switch-model.sh tiel         # preload Tiel Coder (thinking always on)
 ./client/switch-model.sh 35b          # preload the Qwen 35B, thinking off
 ./client/switch-model.sh 27b xhigh    # 27B with maximum thinking
 ./client/switch-model.sh 35b off
+./client/switch-model.sh strata       # Qwen3.8-Flash-Next on Strata instead of Ollama (STRATA.md)
 ./client/switch-model.sh status
 ```
 

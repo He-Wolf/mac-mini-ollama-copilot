@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """Decode, thinking-loop and tool-call tests over the OpenAI API (Strata, llama-server).
 Usage: oa_tests.py <base_url> <model> decode [ctx...] | loops [cap] | tool
-Same prompts and settings as decode.py / loops.py; thinking off = reasoning_effort none."""
+Same prompts and settings as decode.py / loops.py; thinking off = reasoning_effort none.
+API_KEY=... sends it as a bearer token (Strata with --access lan)."""
 import json, os, random, string, sys, urllib.request
 base, model, mode = sys.argv[1:4]
 args = sys.argv[4:]
 
 def chat(body):
     body = {"model": model, "stream": False, **body}
-    req = urllib.request.Request(base + "/v1/chat/completions", json.dumps(body).encode(), {"Content-Type": "application/json"})
+    headers = {"Content-Type": "application/json"}
+    if os.environ.get("API_KEY"):
+        headers["Authorization"] = "Bearer " + os.environ["API_KEY"]
+    req = urllib.request.Request(base + "/v1/chat/completions", json.dumps(body).encode(), headers)
     return json.load(urllib.request.urlopen(req, timeout=3600))
 
 if mode == "decode":

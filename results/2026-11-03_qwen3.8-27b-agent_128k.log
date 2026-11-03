@@ -1,0 +1,14 @@
+################ qwen3.8-27b-agent at 128k (Ollama 0.40.8)
+date: 2026-11-03 10:48:13 CET | Apple M4 Pro 48 GB | KV q8_0, num_ctx 131072, thinking off
+qwen3.8-27b-agent            cold   8k: prefill   7589 tok      99 tok/s ( 76.4s) | gen  25.2 tok/s | wall  83.4s
+qwen3.8-27b-agent            warm   8k: prefill   7703 tok   20336 tok/s (  0.4s) | gen  15.0 tok/s | wall   1.3s
+qwen3.8-27b-agent            cold  32k: prefill  30165 tok      91 tok/s (332.1s) | gen  16.6 tok/s | wall 334.4s
+qwen3.8-27b-agent            warm  32k: prefill  30226 tok   66370 tok/s (  0.5s) | gen  22.4 tok/s | wall   2.2s
+qwen3.8-27b-agent            cold 120k: prefill 112701 tok      67 tok/s (1677.7s) | gen  11.7 tok/s | wall 1681.9s
+qwen3.8-27b-agent            warm 120k: prefill 112771 tok  131929 tok/s (  0.9s) | gen  13.6 tok/s | wall   1.9s
+qwen3.8-27b-agent              ctx   0k: prefill     71 tok/s | decode 500 tok @  27.2 tok/s
+qwen3.8-27b-agent              ctx  30k: prefill     95 tok/s | decode 500 tok @  25.3 tok/s
+qwen3.8-27b-agent              ctx 120k: prefill     77 tok/s | decode 500 tok @  17.4 tok/s
+NAME                        ID              SIZE     PROCESSOR    CONTEXT    RUNNER    UNTIL   
+qwen3.8-27b-agent:latest    3d97f2cd6e87    30 GB    100% GPU     131072     mlx       Forever    
+DONE

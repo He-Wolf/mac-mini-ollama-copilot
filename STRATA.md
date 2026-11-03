@@ -108,7 +108,7 @@ GUI use, but heavy apps will push it into swap.
 
 ```bash
 ~/.local/bin/strata launch --model gyro-s --family gyro --context 128k --vision off \
-  --tune skip --access lan --port 8081 --yes --no-tui --restart \
+  --tune skip --access lan --no-api-key --port 8081 --yes --no-tui --restart \
   --set STRATA_METAL_STREAM=1 --set STRATA_METAL_ARENA_GB=30 \
   --set conversation-cache-mib=1024 --set STRATA_METAL_PROMPT_CHUNK=4096
 ```
@@ -122,7 +122,7 @@ The first run downloads ~65 GB (model, draft layer, DFlash2 drafter).
 | `STRATA_METAL_PROMPT_CHUNK=4096` | +13% prefill (see below). |
 | `--vision off` | Saves ~0.9 GB (text only). |
 | `--context 128k` | KV cache int8 (default), ~1.7 GB at 128k. |
-| `--access lan --port 8081` | Reachable from other machines on the LAN, with an API key (`strata launch --show-key`). Port 8081 keeps Ollama's 8080 free. `--access local` limits it to the Mac. |
+| `--access lan --no-api-key --port 8081` | Reachable from other machines on the LAN without a key, like Ollama. Port 8081 keeps Ollama's 8080 free. Strata warns that anyone on the network can then use the model *and its tools*: the tools are MCP servers configured in Strata, and there are none here (`/mcp` reports 0). Leave out `--no-api-key` to require a key (`strata launch --show-key`), or use `--access local` to keep it on the Mac. |
 
 ### Tuning (8k cold prefill / short decode)
 
@@ -142,8 +142,6 @@ The DFlash2 drafter has ~85-90% of its drafted tokens accepted.
 
 - **API:** OpenAI-compatible at `http://<mac>:8081/v1` (chat completions with tool calls) and
   Anthropic-compatible at `http://<mac>:8081`. Model id: `qwen3.8-flash-next-gyro-gyro-s`.
-- **API key:** required with `--access lan` (requests without it get 401). Show it on the Mac with
-  `~/.local/bin/strata launch --show-key`; it stays the same across restarts.
 - **Thinking off:** `"reasoning_effort": "none"` (or `"chat_template_kwargs": {"enable_thinking": false}`).
 - **One request at a time:** the DFlash2 drafter makes Strata serve requests one by one.
 
@@ -154,8 +152,9 @@ your own model). Add the group from [vscode/chatLanguageModels.strata.json](vsco
 to `chatLanguageModels.json` in your VS Code user folder (`%APPDATA%\Code\User` on Windows,
 `~/Library/Application Support/Code/User` on macOS) and replace `192.168.1.50` with your Mac's IP.
 
-- On first use, Copilot asks for the API key of the "Strata" group: paste the key from `--show-key`.
-  It is kept in VS Code's secret storage, not in the JSON file.
+- No API key is needed (`--no-api-key`). With a key, Copilot does not ask for it on its own: a
+  request fails with "missing or wrong API key" until the key is set for the "Strata" group in
+  *Manage Models*.
 - **Thinking:** choose the reasoning effort in the model picker: `medium` = thinking on (default),
   `none` = thinking off. Both gave correct answers in the tests; `none` answers faster.
 - `maxInputTokens` 114,688 + `maxOutputTokens` 16,384 = the 128k context.

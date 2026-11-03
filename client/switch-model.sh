@@ -74,7 +74,7 @@ if launchctl print gui/$(id -u)/local.ollama.server >/dev/null 2>&1; then
 fi
 echo "[3/3] Starting Strata (about 1 min; the very first start downloads ~65 GB)..."
 ~/.local/bin/strata launch --model gyro-s --family gyro --context 128k --vision off \
-    --tune skip --access lan --port '"${STRATA_PORT}"' --yes --no-tui --restart \
+    --tune skip --access lan --no-api-key --port '"${STRATA_PORT}"' --yes --no-tui --restart \
     --set STRATA_METAL_STREAM=1 --set STRATA_METAL_ARENA_GB=30 \
     --set conversation-cache-mib=1024 --set STRATA_METAL_PROMPT_CHUNK=4096 \
     | grep -E "Ready|Network|API key|rror" || true
@@ -86,8 +86,7 @@ echo "[3/3] Starting Strata (about 1 min; the very first start downloads ~65 GB)
     case "$CODE" in
         200|401) echo "SUCCESS: Strata is serving on http://${REMOTE_HOST}:${STRATA_PORT}/v1"
                  echo "============================================"
-                 echo "In VS Code pick 'Qwen3.8 Flash-Next (Strata)' in the Copilot model picker."
-                 echo "API key: ssh ${REMOTE_USER}@${REMOTE_HOST} '~/.local/bin/strata launch --show-key'" ;;
+                 echo "In VS Code pick 'Qwen3.8 Flash-Next (Strata)' in the Copilot model picker." ;;
         *)       echo "WARNING: Strata does not answer on port ${STRATA_PORT} (HTTP ${CODE})."
                  echo "============================================"
                  echo "Engine log on the Mac: ~/.local/state/strata/launch/gyro-s-128k.engine.log" ;;

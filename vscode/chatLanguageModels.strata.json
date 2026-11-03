@@ -13,7 +13,9 @@
 				"thinking": true,
 				"supportsReasoningEffort": [
 					"none",
-					"medium"
+					"low",
+					"medium",
+					"xhigh"
 				],
 				"maxInputTokens": 114688,
 				"maxOutputTokens": 16384

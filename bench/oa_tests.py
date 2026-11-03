@@ -2,7 +2,8 @@
 """Decode, thinking-loop and tool-call tests over the OpenAI API (Strata, llama-server).
 Usage: oa_tests.py <base_url> <model> decode [ctx...] | loops [cap] | tool
 Same prompts and settings as decode.py / loops.py; thinking off = reasoning_effort none.
-API_KEY=... sends it as a bearer token (Strata with --access lan)."""
+API_KEY=... sends it as a bearer token (Strata with --access lan). loops: EFFORT=low|medium|xhigh sets
+the thinking level of the ON run, ONLY_ON=1 skips the OFF run."""
 import json, os, random, string, sys, urllib.request
 base, model, mode = sys.argv[1:4]
 args = sys.argv[4:]
@@ -41,13 +42,18 @@ elif mode == "loops":
         "In a TypeScript monorepo, `tsc -b` succeeds but VS Code shows 'Cannot find module @app/core' in one package. List the most likely causes in order.",
         "How many times does the digit 1 appear when writing all integers from 1 to 999?",
     ]
+    effort = os.environ.get("EFFORT")         # thinking level for the ON run; unset = the model's default
     for think_on in (True, False):
+        if not think_on and os.environ.get("ONLY_ON"):
+            break
         tot_think = hits = 0
-        print(f"---- loops, thinking {'ON' if think_on else 'OFF'}", flush=True)
+        print(f"---- loops, thinking {'ON' if think_on else 'OFF'}{f' ({effort})' if think_on and effort else ''}", flush=True)
         for i, p in enumerate(PROMPTS, 1):
             body = {"messages": [{"role": "user", "content": p}], "max_tokens": cap}
             if not think_on:
                 body["reasoning_effort"] = "none"
+            elif effort:
+                body["reasoning_effort"] = effort
             r = chat(body)
             c = r["choices"][0]; m = c["message"]
             hit = c.get("finish_reason") == "length"; hits += hit

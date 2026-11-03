@@ -37,17 +37,23 @@ the filler text tokenizes to ~69k tokens). ² The 128-token reply in the ~113k p
 
 ### Quality checks
 
-| | Flash-Next Gyro-S | Ornith 1.5 |
-|---|---|---|
-| Tool call (OpenAI API) | ✅ | ✅ |
-| Thinking ON: unfinished of 6 | **0** | 0 |
-| Thinking ON: avg thinking tokens | ~2,280 | ~1,600 |
-| Thinking OFF: wrong answers | **0 of 6** | 0 of 6 |
+| | Flash-Next Gyro-S | Qwen 3.8 27B | Ornith 1.5 |
+|---|---|---|---|
+| Tool call | ✅ | ✅ | ✅ |
+| Thinking `medium`: unfinished of 6 / avg thinking tokens | **0** / ~590 | 0 / ~740 | – |
+| Thinking `medium`: time for all 6 answers | **~4.3 min** (7,800 tokens) | ~5.8 min (9,400 tokens) | – |
+| Thinking `xhigh` (Flash-Next's default): unfinished of 6 / avg thinking tokens | 0 / ~2,280 | – | – |
+| Thinking on (Ornith has no levels): unfinished of 6 / avg thinking tokens | – | – | 0 / ~1,600 |
+| Thinking OFF: wrong answers | **0 of 6** | 0 of 5 ³ | 0 of 6 |
+
+³ The log keeps only the end of each answer; for "is 2^61−1 prime?" the end is a side note on
+2^11−1, so the 27B's verdict cannot be checked.
 
 Same 6 prompts as in the [model comparison](README.md#model-comparison-9-local-coding-models)
-([bench/oa_tests.py](bench/oa_tests.py) `loops`, 6,000-token cap). With thinking off it answered
-all six correctly.
-Answers are fairly long: 400-1,200 tokens with thinking off.
+([bench/oa_tests.py](bench/oa_tests.py) `loops`, 6,000-token cap; `EFFORT=medium` for the medium run).
+Flash-Next and the 27B answered every prompt at every level tested, with no overthinking. On these
+short prompts the two are equal in quality; Flash-Next is faster. They are too simple to show
+whether the 125B model is stronger on hard coding work.
 
 No official agentic coding benchmarks are published for Qwen3.8-Flash-Next or the Gyro-S pack.
 
@@ -142,7 +148,9 @@ The DFlash2 drafter has ~85-90% of its drafted tokens accepted.
 
 - **API:** OpenAI-compatible at `http://<mac>:8081/v1` (chat completions with tool calls) and
   Anthropic-compatible at `http://<mac>:8081`. Model id: `qwen3.8-flash-next-gyro-gyro-s`.
-- **Thinking off:** `"reasoning_effort": "none"` (or `"chat_template_kwargs": {"enable_thinking": false}`).
+- **Thinking levels:** `"reasoning_effort"`: `none` (off), `low`, `medium`, `xhigh` (`high` means
+  `xhigh`). Strata turns the level into an instruction for the model ("keep your thinking brief" …
+  "validate key steps"). Without a level the model's default `xhigh` applies.
 - **One request at a time:** the DFlash2 drafter makes Strata serve requests one by one.
 
 ### VS Code: GitHub Copilot custom endpoint
@@ -155,8 +163,9 @@ to `chatLanguageModels.json` in your VS Code user folder (`%APPDATA%\Code\User` 
 - No API key is needed (`--no-api-key`). With a key, Copilot does not ask for it on its own: a
   request fails with "missing or wrong API key" until the key is set for the "Strata" group in
   *Manage Models*.
-- **Thinking:** choose the reasoning effort in the model picker: `medium` = thinking on (default),
-  `none` = thinking off. Both gave correct answers in the tests; `none` answers faster.
+- **Thinking:** choose the reasoning effort in the model picker: `none`, `low`, `medium` (default
+  here) or `xhigh`. The quality checks above ran at `xhigh` (thinking on) and `none` (thinking off),
+  both 6 of 6 correct; `medium` and `low` think less and answer sooner.
 - `maxInputTokens` 114,688 + `maxOutputTokens` 16,384 = the 128k context.
 - Strata runs on **port 8081** so it never collides with Ollama's 8080. While Strata runs, Ollama is
   stopped and the Ollama models in the picker show connection errors.
@@ -191,8 +200,10 @@ from the `timings` Strata returns.
 
 - **Flash-Next on Strata is a usable "big model" mode for this Mac:** a 125B model with 128k context,
   correct on every check, at ~280 tok/s prefill and ~31 tok/s decode at any context length.
-- **It replaces the Qwen 3.8 27B as the "think harder" option:** 3-4× faster prefill, faster decode,
-  and much faster at long context (6.7 min vs. 28 min for a cold 113k prompt).
+- **It is the more practical "think harder" option than the Qwen 3.8 27B:** 3-4× faster prefill,
+  faster decode, and much faster at long context (6.7 min vs. 28 min for a cold 113k prompt). On the
+  6 test prompts both were correct at `medium`; whether it is also the stronger coder needs real
+  tasks (the 27B has strong published benchmarks, Flash-Next has none, and Gyro-S is ~2-bit).
 - **Ornith stays the everyday model:** about 2× faster up to ~30k tokens, which is where most agent
   turns are, with a quarter of the memory.
 - **The cost:** Strata needs ~40 GB, so it cannot run next to Ollama, macOS keeps only ~6-8 GB,

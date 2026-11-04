@@ -152,6 +152,11 @@ The DFlash2 drafter has ~85-90% of its drafted tokens accepted.
   `xhigh`). Strata turns the level into an instruction for the model ("keep your thinking brief" …
   "validate key steps"). Without a level the model's default `xhigh` applies.
 - **One request at a time:** the DFlash2 drafter makes Strata serve requests one by one.
+- **Idle:** Strata keeps the model and the last conversations in memory until it is stopped; the next
+  turn of the same chat answers from the cache. `strata launch --restart` with unchanged settings
+  keeps the running engine (and its cache). Stopping Strata (e.g. switching to Ollama) loses the
+  cache; saving a conversation to disk (`slot_save_path`, `POST /slots/0?action=save`) fails on the
+  Mac in 0.2.10 with "conversation snapshot: invalid K/V extent".
 
 ### VS Code: GitHub Copilot custom endpoint
 

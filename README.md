@@ -22,6 +22,8 @@ llama.cpp b11669, VS Code with the Ollama extension 0.0.13.
 | `qwen3.6:35b-mlx` (MoE, 3B active) | 23 GB | **713 / 551 tok/s** | **63 tok/s** | **off** (overthinks) | fast agent work, baseline |
 | `qwen3.8:27b-mlx` (dense) | 18 GB | 99 / 91 tok/s | 28 tok/s | on (`medium`) | hard problems, when you can wait |
 
+Coding quality of Ornith, Flash-Next and the 27B on this Mac: [POLYGLOT.md](POLYGLOT.md) (in progress).
+
 For hard problems, [Qwen3.8-Flash-Next on Strata](STRATA.md) (125B MoE) is faster than the 27B at every
 context length, but it needs ~40 GB and runs instead of Ollama, not next to it.
 

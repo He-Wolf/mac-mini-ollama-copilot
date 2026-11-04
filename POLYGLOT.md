@@ -48,7 +48,11 @@ detached Docker container, so a run survives a closed terminal:
 ```bash
 bench/polyglot/run.sh ornith ollama_chat/ornith-1.5-agent                                      # Ollama
 bench/polyglot/run.sh flash openai/qwen3.8-flash-next-gyro-gyro-s --reasoning-effort none     # Strata
+OPENAI_PORT=8080 bench/polyglot/run.sh 27b openai/qwen3.8-27b-agent --reasoning-effort none   # Ollama, thinking off
 ```
+
+The 27B runs through Ollama's OpenAI endpoint because `--reasoning-effort none` switches thinking off
+there.
 
 ## Results
 
@@ -56,7 +60,7 @@ bench/polyglot/run.sh flash openai/qwen3.8-flash-next-gyro-gyro-s --reasoning-ef
 |---|---|---|---|---|---|---|
 | Ornith 1.5 35B-A3B, thinking on | 19 (63%) | 17 (57%) | **36 (60%)** | 12 (20%) | 4 of 60 | 4 h 02 min |
 | Qwen3.8-Flash-Next Gyro-S, thinking off | 23 (77%) | 19 (63%) | **42 (70%)** | 18 (30%) | 2 of 60 | 1 h 51 min |
-| Qwen 3.8 27B, thinking off | TBD | TBD | **TBD** | TBD | TBD | TBD |
+| Qwen 3.8 27B, thinking off | 15 (50%) | 19 (63%) | **34 (57%)** | 12 (20%) | 5 of 60 | 3 h 52 min |
 
 - **Ornith** solved most exercises on the second try, after seeing the failing tests: 12 on the first
   try, 36 after the second. No syntax errors or placeholder ("lazy") code; 4 answers had an edit block
@@ -64,10 +68,22 @@ bench/polyglot/run.sh flash openai/qwen3.8-flash-next-gyro-gyro-s --reasoning-ef
 - **Flash-Next** without thinking: 18 on the first try, 42 after the second. No syntax errors or
   placeholder code; 2 answers had an edit block that did not match the file. ~1,800 output tokens and
   ~1.8 min per exercise: about 6× fewer tokens and twice as fast as Ornith with thinking.
+- **27B** without thinking: 12 on the first try, 34 after the second. 3 answers got stuck repeating the
+  same edit block (99–144 times) until the 16k output cap; 5 answers had an edit block that did not
+  match the file, and 3 times it asked a question instead of editing. ~2,000 output tokens but
+  ~3.8 min per exercise: the dense model is the slowest per token.
 
 Raw results (per exercise: Aider's result JSON and the full chat with the model's edits and the test
 output): [results/polyglot/](results/polyglot/).
 
 ## Verdict
 
-TBD.
+- **Flash-Next (Strata) writes the best code of the three and is also the fastest**: 70%, half the run
+  time of the others and the fewest broken edits. Its lead (10–13 points) is about the margin of error,
+  so it is likely better, not proven.
+- **The 27B brings no quality gain over the MoE models.** Under the same conditions (thinking off) it
+  scored 8 points below Flash-Next, was twice as slow and was the only model that looped.
+- **Ornith reached 60% with thinking on**, at ~6× the output tokens of the Qwens without thinking.
+
+The test covers single-file Python and JavaScript exercises; it does not measure tool use, long
+agentic sessions or the other languages in daily use (C#, Terraform, Bash).

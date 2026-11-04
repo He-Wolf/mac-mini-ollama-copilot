@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/python/exercises/practice/zipper",
+    "testcase": "zipper",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 163.71437764167786,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 10498,
+    "completion_tokens": 1925,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "cb300b98d8f4b2cc2bfb5e9cfee3481d68f49717"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "762d09712aaed18a55079653aa07e9644d4210a9"
+        ]
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/javascript/exercises/practice/twelve-days",
+    "testcase": "twelve-days",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 330.3595087528229,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 25091,
+    "completion_tokens": 2231,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "86dbfa1f1869c6579371c641835ba577c0ec5b3c"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "e3161978f77cd10d3d11d5dc1d66a452b49f9714"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "fdfcb74338be67023e5d993899eb0a7576072b98"
+        ]
+    ]
+}

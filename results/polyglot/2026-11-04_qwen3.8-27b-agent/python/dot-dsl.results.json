@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/python/exercises/practice/dot-dsl",
+    "testcase": "dot-dsl",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 170.440367937088,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 9411,
+    "completion_tokens": 1918,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "40b52599d3828d32e87e4c4b18be9fdc9f64e628"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "cd6148996edc63ee8c681353b29cf1b31454b834"
+        ]
+    ]
+}

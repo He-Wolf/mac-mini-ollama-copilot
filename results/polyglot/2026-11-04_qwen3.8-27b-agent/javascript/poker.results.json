@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/javascript/exercises/practice/poker",
+    "testcase": "poker",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 172.72408199310303,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 7717,
+    "completion_tokens": 1918,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "d1badbf83e004df2e7c6e202be8d62b24ee66d69"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "bb6a518b7a3bd67027ed8bc73c99388100a39a55"
+        ]
+    ]
+}

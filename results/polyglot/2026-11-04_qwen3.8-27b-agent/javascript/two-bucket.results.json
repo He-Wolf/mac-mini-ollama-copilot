@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/javascript/exercises/practice/two-bucket",
+    "testcase": "two-bucket",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 496.4964578151703,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 21735,
+    "completion_tokens": 6669,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "d0d5bbbd34f1f113cbedf799e0aab87922b948f9"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "6b5370c3b625da4ef4f8aeaba322cff9fb4aea3c"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "d8d8b569070e72f395d67e93252996c87d1c087f"
+        ]
+    ]
+}

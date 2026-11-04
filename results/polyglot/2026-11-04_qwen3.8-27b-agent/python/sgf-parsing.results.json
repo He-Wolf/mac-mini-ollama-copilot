@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/python/exercises/practice/sgf-parsing",
+    "testcase": "sgf-parsing",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 856.6557729244232,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 41878,
+    "completion_tokens": 10254,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "dc89b2f3c041ae5ed7bfc5410debf7172f326bef"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "0ef13ce67372511a132381529a0c41a632d7f1fc"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "81afb2fa7c40d49ac8c783f1aa733e93d4407dc3"
+        ]
+    ]
+}

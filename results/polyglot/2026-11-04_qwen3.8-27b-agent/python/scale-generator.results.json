@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/python/exercises/practice/scale-generator",
+    "testcase": "scale-generator",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 399.35075283050537,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 9443,
+    "completion_tokens": 1781,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "dd4bf702130b64fa9c02fdf78770805585023e70"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "d796ef0433b80c51b06424d5c86e3bf57e29a85c"
+        ]
+    ]
+}

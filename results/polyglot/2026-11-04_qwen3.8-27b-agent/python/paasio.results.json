@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-17-53-30--27b/python/exercises/practice/paasio",
+    "testcase": "paasio",
+    "model": "openai/qwen3.8-27b-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 593.1391711235046,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 37897,
+    "completion_tokens": 4460,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "1fbfcfbe70fe14123dafa1af41fe980730e2e2ba",
+            "74739ccbd003e21ecd325ab3f6dd98432551d2be"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "908029660081d18a0c454fb29c8a7ffa68c553f8"
+        ],
+        [
+            "d306683ee844f630baadaad914e58051088ecb51",
+            "8e1f3eaf7e55d84b4e651298a2c6c001b8fa54c5"
+        ]
+    ]
+}

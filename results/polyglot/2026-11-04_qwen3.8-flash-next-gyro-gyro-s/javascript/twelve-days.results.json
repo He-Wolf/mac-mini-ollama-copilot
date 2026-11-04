@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/javascript/exercises/practice/twelve-days",
+    "testcase": "twelve-days",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 127.36469507217407,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 11944,
+    "completion_tokens": 1050,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "480d57c95f317fa223c71ebf72f4d8737aa46ae3"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "61f8fb84e41499bcea6b309410d9506350a89602"
+        ]
+    ]
+}

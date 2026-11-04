@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/javascript/exercises/practice/meetup",
+    "testcase": "meetup",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 208.70545434951782,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 29651,
+    "completion_tokens": 2269,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "b21f0c188a4d3110778be3dd98ad07b918d41db0"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "3e726de8e5a635cd5d0d3e6e4bb2c2fade9cb4e1"
+        ]
+    ]
+}

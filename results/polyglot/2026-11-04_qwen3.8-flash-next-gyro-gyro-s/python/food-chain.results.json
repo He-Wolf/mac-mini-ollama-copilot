@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/python/exercises/practice/food-chain",
+    "testcase": "food-chain",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 98.91885471343994,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 8065,
+    "completion_tokens": 1487,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "2c4f7c905b830efe6e334512d444e9a7cb1aed01"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "522ae1f3e048b32cacfd7ae24e481f5e10890c2a"
+        ]
+    ]
+}

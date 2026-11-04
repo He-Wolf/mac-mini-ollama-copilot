@@ -55,12 +55,15 @@ bench/polyglot/run.sh flash openai/qwen3.8-flash-next-gyro-gyro-s --reasoning-ef
 | Model | Python (30) | JavaScript (30) | **Total (60)** | Passed on 1st try | Malformed edits | Run time |
 |---|---|---|---|---|---|---|
 | Ornith 1.5 35B-A3B, thinking on | 19 (63%) | 17 (57%) | **36 (60%)** | 12 (20%) | 4 of 60 | 4 h 02 min |
-| Qwen3.8-Flash-Next Gyro-S, thinking off | TBD | TBD | **TBD** | TBD | TBD | TBD |
+| Qwen3.8-Flash-Next Gyro-S, thinking off | 23 (77%) | 19 (63%) | **42 (70%)** | 18 (30%) | 2 of 60 | 1 h 51 min |
 | Qwen 3.8 27B, thinking off | TBD | TBD | **TBD** | TBD | TBD | TBD |
 
 - **Ornith** solved most exercises on the second try, after seeing the failing tests: 12 on the first
   try, 36 after the second. No syntax errors or placeholder ("lazy") code; 4 answers had an edit block
   that did not match the file. ~11,400 output tokens and ~4 min per exercise, mostly thinking.
+- **Flash-Next** without thinking: 18 on the first try, 42 after the second. No syntax errors or
+  placeholder code; 2 answers had an edit block that did not match the file. ~1,800 output tokens and
+  ~1.8 min per exercise: about 6× fewer tokens and twice as fast as Ornith with thinking.
 
 Raw results (per exercise: Aider's result JSON and the full chat with the model's edits and the test
 output): [results/polyglot/](results/polyglot/).

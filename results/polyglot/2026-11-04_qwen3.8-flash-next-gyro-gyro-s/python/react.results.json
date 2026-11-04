@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/python/exercises/practice/react",
+    "testcase": "react",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 284.0407898426056,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 20053,
+    "completion_tokens": 5022,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "04190cf5719c2c223170db13c043581f0daefa3d"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "4dee976bc72eed9d391f5ff43637d25ecf7a7c53"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "f8514edd680147695d5fe4b1fedbe9d7d781e4bf"
+        ]
+    ]
+}

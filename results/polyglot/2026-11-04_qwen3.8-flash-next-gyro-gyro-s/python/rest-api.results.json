@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/python/exercises/practice/rest-api",
+    "testcase": "rest-api",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 135.05174922943115,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 11100,
+    "completion_tokens": 2326,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "1a45c629b565a912955fd70718013d385274a0ff"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "d6b649e2f0adcbcad22d05fcb526c61e06da2c81"
+        ]
+    ]
+}

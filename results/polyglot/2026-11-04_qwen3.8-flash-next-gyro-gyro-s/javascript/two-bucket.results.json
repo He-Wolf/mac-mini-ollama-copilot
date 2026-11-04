@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-15-32-32--flash/javascript/exercises/practice/two-bucket",
+    "testcase": "two-bucket",
+    "model": "openai/qwen3.8-flash-next-gyro-gyro-s",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 166.12156701087952,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": "none",
+    "prompt_tokens": 8564,
+    "completion_tokens": 3055,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "912a59abdfdac8d1965c36deb72a7dc78ea370f2",
+            "180b81d9a00354571acd51e597aa3ee1d9ecbdf6"
+        ],
+        [
+            "a3796c5be2b7e74497344b05886ae2e4cb1f9be4",
+            "28264422ce38a5c2d4c9d14996a3b8c473e9b6e3"
+        ]
+    ]
+}

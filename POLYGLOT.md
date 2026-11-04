@@ -7,9 +7,9 @@ daily use. Vendor benchmarks are measured on the full-precision models.
 
 | Model | Server | Weights | Thinking |
 |---|---|---|---|
-| Ornith 1.5 35B-A3B (`ornith-1.5-agent`) | Ollama | GGUF Q4_K_M | on (Ornith has no levels) |
-| Qwen3.8-Flash-Next Gyro-S (`qwen3.8-flash-next-gyro-gyro-s`) | [Strata](STRATA.md) | Gyro-S, ~2-bit | `medium` |
-| Qwen 3.8 27B (`qwen3.8-27b-agent`) | Ollama | MLX nvfp4 | `medium` |
+| Ornith 1.5 35B-A3B (`ornith-1.5-agent`) | Ollama | GGUF Q4_K_M | on |
+| Qwen3.8-Flash-Next Gyro-S (`qwen3.8-flash-next-gyro-gyro-s`) | [Strata](STRATA.md) | Gyro-S, ~2-bit | off |
+| Qwen 3.8 27B (`qwen3.8-27b-agent`) | Ollama | MLX nvfp4 | off |
 
 ## The benchmark
 
@@ -35,24 +35,35 @@ bench/polyglot/setup.sh      # clones aider + polyglot-benchmark, builds the sub
 
 | | |
 |---|---|
-| Harness | Aider `benchmark/benchmark.py` (aider TBD), polyglot-benchmark 7e0611e |
-| Edit format | TBD |
+| Harness | Aider `benchmark/benchmark.py` (aider 0.86.3.dev, 5dc9490), polyglot-benchmark 7e0611e |
+| Edit format | `diff` (search/replace blocks) |
 | Tries per exercise | 2 |
 | Parallel requests | 1 (the servers serve one request at a time) |
-| Context | 128k (`num_ctx 131072` in the Modelfiles; Strata `--context 128k`) |
-| Output cap | 16,384 tokens per answer |
+| Context | 128k (`--num-ctx 131072` for Ollama; Strata `--context 128k`) |
+| Output cap | 16,384 tokens per answer (Modelfile `num_predict`; Strata) |
 
-Run command: TBD.
+Run each model with [bench/polyglot/run.sh](bench/polyglot/run.sh) (`MAC_HOST` = the Mac's IP); it starts a
+detached Docker container, so a run survives a closed terminal:
+
+```bash
+bench/polyglot/run.sh ornith ollama_chat/ornith-1.5-agent                                      # Ollama
+bench/polyglot/run.sh flash openai/qwen3.8-flash-next-gyro-gyro-s --reasoning-effort none     # Strata
+```
 
 ## Results
 
 | Model | Python (30) | JavaScript (30) | **Total (60)** | Passed on 1st try | Malformed edits | Run time |
 |---|---|---|---|---|---|---|
-| Ornith 1.5 35B-A3B | TBD | TBD | **TBD** | TBD | TBD | TBD |
-| Qwen3.8-Flash-Next Gyro-S | TBD | TBD | **TBD** | TBD | TBD | TBD |
-| Qwen 3.8 27B | TBD | TBD | **TBD** | TBD | TBD | TBD |
+| Ornith 1.5 35B-A3B, thinking on | 19 (63%) | 17 (57%) | **36 (60%)** | 12 (20%) | 4 of 60 | 4 h 02 min |
+| Qwen3.8-Flash-Next Gyro-S, thinking off | TBD | TBD | **TBD** | TBD | TBD | TBD |
+| Qwen 3.8 27B, thinking off | TBD | TBD | **TBD** | TBD | TBD | TBD |
 
-Raw results: TBD.
+- **Ornith** solved most exercises on the second try, after seeing the failing tests: 12 on the first
+  try, 36 after the second. No syntax errors or placeholder ("lazy") code; 4 answers had an edit block
+  that did not match the file. ~11,400 output tokens and ~4 min per exercise, mostly thinking.
+
+Raw results (per exercise: Aider's result JSON and the full chat with the model's edits and the test
+output): [results/polyglot/](results/polyglot/).
 
 ## Verdict
 

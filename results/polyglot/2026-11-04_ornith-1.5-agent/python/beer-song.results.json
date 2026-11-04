@@ -1,0 +1,30 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/python/exercises/practice/beer-song",
+    "testcase": "beer-song",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        true
+    ],
+    "cost": 0.0,
+    "duration": 28.191441535949707,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 5693,
+    "completion_tokens": 1118,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "330920cc40edd1eb17fe15c448f56c4a5bdd1cc7"
+        ]
+    ]
+}

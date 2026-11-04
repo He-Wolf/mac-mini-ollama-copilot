@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/javascript/exercises/practice/variable-length-quantity",
+    "testcase": "variable-length-quantity",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 214.13343238830566,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 11376,
+    "completion_tokens": 10600,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "d3b063fb68bc2e171e23aa3180f5c1791423077c"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "fa18823784669d06687134ea1072c7348835b9c5"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "b6295703681b9eb57ef35ff1509786529c2fbbfb"
+        ]
+    ]
+}

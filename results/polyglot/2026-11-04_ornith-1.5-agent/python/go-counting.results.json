@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/python/exercises/practice/go-counting",
+    "testcase": "go-counting",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 193.03732347488403,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 7427,
+    "completion_tokens": 9812,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "70d399db521babfa1eecc778f8c01855adf0b7f6"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "450761a5dd4a01413aa4a5a6968e53bee035702a"
+        ]
+    ]
+}

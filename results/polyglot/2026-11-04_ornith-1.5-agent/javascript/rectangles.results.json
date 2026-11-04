@@ -1,0 +1,30 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/javascript/exercises/practice/rectangles",
+    "testcase": "rectangles",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        true
+    ],
+    "cost": 0.0,
+    "duration": 35.681535959243774,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 2315,
+    "completion_tokens": 1880,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "92c4cb9f738ee71d551f834db1427015ac42f4fe"
+        ]
+    ]
+}

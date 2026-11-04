@@ -1,0 +1,39 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/javascript/exercises/practice/robot-name",
+    "testcase": "robot-name",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        false
+    ],
+    "cost": 0.0,
+    "duration": 234.9384515285492,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 1,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 1,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 9222,
+    "completion_tokens": 12243,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "1850bbb99d88ce9da59b48c56b00f9b40750e9e7"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "d4803f9d9faf5a76a162ea86499274082f79bea2"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "d8020409f3597f4e3aa7f6ef010c300ede9ab8b0"
+        ]
+    ]
+}

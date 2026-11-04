@@ -1,0 +1,35 @@
+{
+    "testdir": "/benchmarks/2026-11-04-10-05-40--ornith/javascript/exercises/practice/meetup",
+    "testcase": "meetup",
+    "model": "ollama_chat/ornith-1.5-agent",
+    "edit_format": "diff",
+    "tests_outcomes": [
+        false,
+        true
+    ],
+    "cost": 0.0,
+    "duration": 75.78161931037903,
+    "test_timeouts": 0,
+    "commit_hash": "5dc9490",
+    "num_error_outputs": 0,
+    "num_user_asks": 0,
+    "num_exhausted_context_windows": 0,
+    "num_malformed_responses": 0,
+    "syntax_errors": 0,
+    "indentation_errors": 0,
+    "lazy_comments": 0,
+    "reasoning_effort": null,
+    "prompt_tokens": 26955,
+    "completion_tokens": 1490,
+    "thinking_tokens": null,
+    "chat_hashes": [
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "b75d4eb6029d9f83780e697f93c1d39c9be50442"
+        ],
+        [
+            "d5fee45885adf73a5e62c58f3420a0975e1edab5",
+            "89fa25086d2998ca8cca966da435df5062e392ee"
+        ]
+    ]
+}

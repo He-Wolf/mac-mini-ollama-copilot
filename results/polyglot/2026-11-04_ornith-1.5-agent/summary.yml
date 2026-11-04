@@ -1,0 +1,27 @@
+- dirname: 2026-11-04-10-05-40--ornith
+  test_cases: 60
+  model: ollama_chat/ornith-1.5-agent
+  edit_format: diff
+  commit_hash: 5dc9490
+  pass_rate_1: 20.0
+  pass_rate_2: 60.0
+  pass_num_1: 12
+  pass_num_2: 36
+  percent_cases_well_formed: 93.3
+  error_outputs: 10
+  num_malformed_responses: 4
+  num_with_malformed_responses: 4
+  user_asks: 0
+  lazy_comments: 0
+  syntax_errors: 0
+  indentation_errors: 0
+  exhausted_context_windows: 0
+  prompt_tokens: 511437
+  completion_tokens: 685918
+  test_timeouts: 0
+  total_tests: 60
+  command: aider --model ollama_chat/ornith-1.5-agent
+  date: 2026-11-04
+  versions: 0.86.3.dev
+  seconds_per_case: 239.4
+  total_cost: 0.0000

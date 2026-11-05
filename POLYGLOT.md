@@ -73,6 +73,10 @@ there.
   match the file, and 3 times it asked a question instead of editing. ~2,000 output tokens but
   ~3.8 min per exercise: the dense model is the slowest per token.
 
+All runs use Aider's default `temperature 0` (greedy). A second 27B run with Qwen's thinking-off sampling
+(temperature 0.7, top_p 0.8, presence_penalty 1.5) scored 32/60 (53%), still with 2 runaway answers:
+the sampling settings do not explain the gap.
+
 Raw results (per exercise: Aider's result JSON and the full chat with the model's edits and the test
 output): [results/polyglot/](results/polyglot/).
 
